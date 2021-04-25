@@ -1,0 +1,486 @@
+NEW NODE: STRUCT
+[  1]          STRUCT: struct
+NEW NODE: ID
+[  1]              ID: Burger
+NEW NODE: LC
+[  1]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  2]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  2]              ID: meat
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  2]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  3]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  3]              ID: bread
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  4]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  4]              ID: saurce
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  4]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  5]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  5]              ID: McDonald
+NEW NODE: SEMI
+[  5]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: STRUCT
+[  7]          STRUCT: struct
+NEW NODE: ID
+[  7]              ID: Whopper
+NEW NODE: LC
+[  7]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  8]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  8]              ID: meat1
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  8]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  9]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  9]              ID: meat2
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  9]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[ 10]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 10]              ID: bread1
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 10]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[ 11]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 11]              ID: saurce1
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 11]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[ 12]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[ 12]              ID: BurgerKing
+NEW NODE: SEMI
+[ 12]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[ 14]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 14]              ID: main
+NEW NODE: LP
+[ 14]              LP: (
+NEW NODE: RP
+[ 14]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[ 14]              LC: {
+NEW NODE: ID
+[ 15]              ID: McDonald
+NEW NODE: DefList
+NEW NODE: DOT
+[ 15]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 15]              ID: meat
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 15]        ASSIGNOP: =
+NEW NODE: MINUS
+[ 15]           MINUS: -
+NEW NODE: INT
+[ 15]             INT: 1
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 15]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 16]              ID: McDonald
+NEW NODE: DOT
+[ 16]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 16]              ID: bread
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 16]        ASSIGNOP: =
+NEW NODE: INT
+[ 16]             INT: 1
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 16]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 17]              ID: McDonald
+NEW NODE: DOT
+[ 17]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 17]              ID: saurce
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 17]        ASSIGNOP: =
+NEW NODE: FLOAT
+[ 17]           FLOAT: 3.4
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 17]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 18]              ID: BurgerKing
+NEW NODE: DOT
+[ 18]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 18]              ID: meat1
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 18]        ASSIGNOP: =
+NEW NODE: INT
+[ 18]             INT: 3
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 18]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 19]              ID: BurgerKing
+NEW NODE: DOT
+[ 19]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 19]              ID: meat2
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 19]        ASSIGNOP: =
+NEW NODE: INT
+[ 19]             INT: 3
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 19]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 20]              ID: BurgerKing
+NEW NODE: DOT
+[ 20]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 20]              ID: bread1
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 20]        ASSIGNOP: =
+NEW NODE: ID
+[ 20]              ID: McDonald
+NEW NODE: DOT
+[ 20]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 20]              ID: bread
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 20]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 21]              ID: BurgerKing
+NEW NODE: DOT
+[ 21]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 21]              ID: saurce1
+NEW NODE: Exp
+NEW NODE: ASSIGNOP
+[ 21]        ASSIGNOP: =
+NEW NODE: ID
+[ 21]              ID: McDonald
+NEW NODE: DOT
+[ 21]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 21]              ID: saurce
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 21]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: RETURN
+[ 22]          RETURN: return
+NEW NODE: INT
+[ 22]             INT: 3
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 22]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RC
+[ 23]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing OptTag.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: meat, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: bread, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: saurce, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Burger, ns: 1
+Insert Symbol: name: Burger
+------------------------------
+stack 0:
+	name: Burger, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: McDonald, ns: 2
+Insert Symbol: name: McDonald
+------------------------------
+stack 0:
+	name: McDonald, src: GVAR
+	name: Burger, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing OptTag.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: meat1, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: meat2, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: bread1, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: saurce1, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Whopper, ns: 1
+Insert Symbol: name: Whopper
+------------------------------
+stack 0:
+	name: Whopper, src: STRUCT
+	name: McDonald, src: GVAR
+	name: Burger, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: BurgerKing, ns: 2
+Insert Symbol: name: BurgerKing
+------------------------------
+stack 0:
+	name: BurgerKing, src: GVAR
+	name: Whopper, src: STRUCT
+	name: McDonald, src: GVAR
+	name: Burger, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: BurgerKing, src: GVAR
+	name: Whopper, src: STRUCT
+	name: McDonald, src: GVAR
+	name: Burger, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: McDonald, ns: 3
+Search for Use: name: McDonald, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: McDonald, ns: 3
+Search for Use: name: McDonald, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: McDonald, ns: 3
+Search for Use: name: McDonald, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: BurgerKing, ns: 3
+Search for Use: name: BurgerKing, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: BurgerKing, ns: 3
+Search for Use: name: BurgerKing, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: BurgerKing, ns: 3
+Search for Use: name: BurgerKing, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: McDonald, ns: 3
+Search for Use: name: McDonald, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: BurgerKing, ns: 3
+Search for Use: name: BurgerKing, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: McDonald, ns: 3
+Search for Use: name: McDonald, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: BurgerKing, src: GVAR
+	name: Whopper, src: STRUCT
+	name: McDonald, src: GVAR
+	name: Burger, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

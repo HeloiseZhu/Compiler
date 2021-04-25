@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-//#define DEBUGGING
+#define DEBUGGING
 #define NT2STR(x) nodeTypeString[x]
 #define IVAL(x) x->nodeValue.intVal
 #define FVAL(x) x->nodeValue.floatVal

@@ -1,0 +1,192 @@
+NEW NODE: STRUCT
+[  1]          STRUCT: struct
+NEW NODE: ID
+[  1]              ID: Jedi
+NEW NODE: LC
+[  1]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  2]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  2]              ID: force
+NEW NODE: VarDec
+NEW NODE: COMMA
+[  2]           COMMA: ,
+NEW NODE: Dec
+NEW NODE: ID
+[  2]              ID: power
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  2]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  3]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  3]              ID: might
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  4]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  4]              ID: force
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  4]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  5]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: SEMI
+[  5]            SEMI: ;
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[  7]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  7]              ID: main
+NEW NODE: LP
+[  7]              LP: (
+NEW NODE: RP
+[  7]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[  7]              LC: {
+NEW NODE: STRUCT
+[  8]          STRUCT: struct
+NEW NODE: ID
+[  8]              ID: Jedi
+NEW NODE: ID
+[  8]              ID: obiwon
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  8]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RETURN
+[  9]          RETURN: return
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: ID
+[  9]              ID: obiwon
+NEW NODE: DOT
+[  9]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[  9]              ID: force
+NEW NODE: Exp
+NEW NODE: SEMI
+[  9]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RC
+[ 10]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: force, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+Search for Insert: name: power, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: might, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: force, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Jedi, ns: 1
+Insert Symbol: name: Jedi
+------------------------------
+stack 0:
+	name: Jedi, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Jedi, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Jedi, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: obiwon, ns: 3
+Insert Symbol: name: obiwon
+------------------------------
+stack 1:
+	name: obiwon, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Jedi, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: force, ns: Field
+Search for Use: name: obiwon, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Jedi, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

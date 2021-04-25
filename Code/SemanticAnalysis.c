@@ -4,31 +4,36 @@ extern HashBucket* symbolTable;
 extern StackEle* symbolStack;
 extern int stackTop;
 
-DataType* intSpecifier;
-DataType* floatSpecifier;
-DataType* errorSpecifier;
+DataType* intSpecifier = NULL;
+DataType* floatSpecifier = NULL;
+DataType* errorSpecifier = NULL;
+Symbol* fieldSymbol = NULL;
+Symbol* errorSymbol = NULL;
+Symbol* tmpFuncSymbol = NULL;
 int smtcErrorNum = 0;
 int anonStructNum = 0;
-Symbol* tmpFuncSymbol = NULL;
 
 
-void smtcProgram(TreeNode* root) {
-    if(SMTC_PROD_CHECK_1(root, ExtDefList)) {
-        init();
-        stackTop = 0;
-        SMTC_SET_STACKTOP(stackTop)
-        smtcExtDefList(root->children[0]);
+void smtcProgram(TreeNode* node) {
+    init();
+    if(SMTC_PROD_CHECK_1(node, ExtDefList)) {    
+        //stackTop = 0;
+        //SMTC_SET_STACKTOP(stackTop)
+        smtcExtDefList(node->children[0]);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Program)
 }
 
 // done
 void smtcExtDefList(TreeNode* node) {
     if(SMTC_PROD_CHECK_2(node, ExtDef, ExtDefList)) {
-        SMTC_PROD_HANDLER_2(node, ExtDef, ExtDefList)
+        smtcExtDef(node->children[0]);
+        smtcExtDefList(node->children[1]);
     }
     else if(node->childrenNum == 0) { /* empty */ }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(ExtDefList)
 }
 
 // done
@@ -43,14 +48,19 @@ void smtcExtDef(TreeNode* node) {
     else if(SMTC_PROD_CHECK_3(node, Specifier, FunDec, CompSt)) {
         DataType* specifier = smtcSpecifier(node->children[0]);
         Symbol* funcSymbol;
-        SET_SYMBOL(funcSymbol, NS_FUNC)
+        SMTC_SET_SYMBOL(funcSymbol, NS_FUNC)
         funcSymbol->funcData = (FuncData*)malloc(sizeof(FuncData));
         funcSymbol->funcData->retType = specifier;
         funcSymbol->funcData->paramList = NULL;
         funcSymbol->funcData->tail = NULL;
         tmpFuncSymbol = funcSymbol;
+        // stack
+        stackTop++;
+        if(stackTop >= MAX_SS_SIZE || stackTop < 0) {
+            // TODO: handle stack error
+        }
         smtcFunDec(node->children[1], funcSymbol);
-        if(search4Insert(SVAL(node->children[1]), NS_FUNC)) {
+        if(search4Insert(funcSymbol->name, NS_FUNC)) {
             char errMsg[256];
             sprintf(errMsg, "Redefined function \"%s\"", SVAL(node->children[1]));
             printSmtcError(node->children[1]->lineno, 4, errMsg);
@@ -59,10 +69,12 @@ void smtcExtDef(TreeNode* node) {
             insertSymbol(funcSymbol);
         smtcCompSt(node->children[2]);
         tmpFuncSymbol = NULL;
-        SMTC_SET_STACKTOP(stackTop)
+        //SMTC_SET_STACKTOP(stackTop)
+        clearStackTop();
         stackTop--;
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(ExtDef)
 }
 
 // done
@@ -74,27 +86,30 @@ void smtcExtDecList(TreeNode* node, DataType* specifier) {
         smtcVarDec4Var(node->children[0], specifier, NS_GVAR);
         smtcExtDecList(node->children[2], specifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(ExtDecList)
 }
 
 // done
 DataType* smtcSpecifier(TreeNode* node) {
     if(SMTC_PROD_CHECK_1(node, TYPE)) {
-        DataType* newSpecifier = NULL;
         char* type = SVAL(node->children[0]);
         if(strcmp(type, "int") == 0) {
-            newSpecifier = intSpecifier;
+            return intSpecifier;
         }
         else if(strcmp(type, "float") == 0) {
-            newSpecifier = floatSpecifier;
+            return floatSpecifier;
         }
-        return newSpecifier;
     }
     else if(SMTC_PROD_CHECK_1(node, StructSpecifier)) {
         Symbol* s = smtcStructSpecifier(node->children[0]);
-        return s->dataType;
+        if(s) {
+            SMTC_PRINT_ERROR(Specifier)
+            return s->dataType;
+        }
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Specifier)
     return NULL;
 }
 
@@ -102,28 +117,43 @@ DataType* smtcSpecifier(TreeNode* node) {
 Symbol* smtcStructSpecifier(TreeNode* node) {        
     if(SMTC_PROD_CHECK_5(node, STRUCT, OptTag, LC, DefList, RC)) {
         Symbol* newSymbol;
-        SET_SYMBOL(newSymbol, NS_STRUCT)
-        SET_SPECIFIER(newSymbol->dataType, DT_STRUCT)
+        SMTC_SET_SYMBOL(newSymbol, NS_STRUCT)
+        SMTC_SET_SPECIFIER(newSymbol->dataType, DT_STRUCT)
         newSymbol->dataType->structure.fieldList = NULL;
         newSymbol->dataType->structure.tail = NULL;
         smtcOptTag(node->children[1], newSymbol);
         smtcDefList4Field(node->children[3], newSymbol);
-        Symbol* errSymbol = search4Insert(SVAL(node->children[0]), NS_STRUCT);
-        if(!errSymbol) {
-            insertSymbol(newSymbol);
-            return newSymbol;
+
+        Symbol* s = search4Insert(newSymbol->name, NS_STRUCT);
+        if(s) {
+            char errMsg[256];
+            if(s->nameSrc == NS_STRUCT) {
+                sprintf(errMsg, "Redefined struct \"%s\"", SVAL(node->children[1]));
+                printSmtcError(node->children[1]->lineno, 16, errMsg);
+                SMTC_PRINT_ERROR(StructSpecifier)
+                return s;
+            }
+            else {  // NS_GVAR or NS_LVAR
+                sprintf(errMsg, "Duplicated name \"%s\"", SVAL(node->children[1]));
+                printSmtcError(node->children[1]->lineno, 16, errMsg);
+                // TODO: rename and insert ?
+                insertSymbol(newSymbol);
+                SMTC_PRINT_ERROR(StructSpecifier)
+                return newSymbol;
+            }
         }
         else {
-            char errMsg[256];
-            sprintf(errMsg, "Duplicated name \"%s\"", SVAL(node->children[1]));
-            printSmtcError(node->children[1]->lineno, 16, errMsg);
-            return errSymbol;
+            insertSymbol(newSymbol);
+            SMTC_PRINT_ERROR(StructSpecifier)
+            return newSymbol;
         } 
     }
     else if(SMTC_PROD_CHECK_2(node, STRUCT, Tag)) {
+        SMTC_PRINT_ERROR(StructSpecifier)
         return smtcTag(node->children[1]);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(StructSpecifier)
     return NULL;
 }
 
@@ -137,7 +167,8 @@ void smtcOptTag(TreeNode* node, Symbol* newSymbol) {
         sprintf(newSymbol->name, "AnonStruct_%d", anonStructNum);
         anonStructNum++;
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(OptTag)
 }
 
 // done
@@ -151,93 +182,174 @@ Symbol* smtcTag(TreeNode* node) {
         }
         return structSymbol;
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Tag)
     return NULL;
 }
 
 // done
 void smtcVarDec4Field(TreeNode* node, Symbol* newSymbol, DataType* specifier) {
     if(SMTC_PROD_CHECK_1(node, ID)) {
-        if(search4Field(SVAL(node->children[0]), newSymbol)) {
-            // TODO: rename and insert
-            char errMsg[256];
-            sprintf(errMsg, "Redefined field \"%s\"", SVAL(node->children[0]));
-            printSmtcError(node->children[0]->lineno, 15, errMsg);
-        }
-        else {
-            Field* newField;
-            SET_FIELD(newField)
-            newField->name = SVAL(node->children[0]);
-            newField->dataType = specifier;
+        Field* newField;
+        SMTC_SET_FIELD(newField)
+        newField->name = SVAL(node->children[0]);
+        newField->dataType = specifier;
+        Symbol* s = search4Field(SVAL(node->children[0]));
+        if(s) {
+            if(s == fieldSymbol) {  // field in other struct
+                char errMsg[256];
+                sprintf(errMsg, "Duplicated field name \"%s\"", SVAL(node->children[0]));
+                printSmtcError(node->children[0]->lineno, 15, errMsg);
+            }
+            else {  // NS_GVAR
+                char errMsg[256];
+                sprintf(errMsg, "Duplicated name \"%s\"", SVAL(node->children[0]));
+                printSmtcError(node->children[0]->lineno, 15, errMsg);
+            }
+            // TODO: rename and insert ?
             if(newSymbol->dataType->structure.fieldList)
                 newSymbol->dataType->structure.tail->next = newField;
             else
                 newSymbol->dataType->structure.fieldList = newField;
             newSymbol->dataType->structure.tail = newField;
         }
+        else {
+            Field* p = newSymbol->dataType->structure.fieldList;
+            while(p) {
+                if(strcmp(p->name, SVAL(node->children[0])) == 0) {
+                    char errMsg[256];
+                    sprintf(errMsg, "Redefined field \"%s\"", SVAL(node->children[0]));
+                    printSmtcError(node->children[0]->lineno, 15, errMsg);
+                    break;
+                }
+                p = p->next;
+            }
+            if(!p) {
+                if(newSymbol->dataType->structure.fieldList)
+                    newSymbol->dataType->structure.tail->next = newField;
+                else
+                    newSymbol->dataType->structure.fieldList = newField;
+                newSymbol->dataType->structure.tail = newField;
+            }
+        }
     }
     else if(SMTC_PROD_CHECK_4(node, VarDec, LB, INT, RB)) {
         DataType* newSpecifier;
-        SET_SPECIFIER(newSpecifier, DT_ARRAY)
+        SMTC_SET_SPECIFIER(newSpecifier, DT_ARRAY)
         newSpecifier->array.elem = specifier;
         newSpecifier->array.size = IVAL(node->children[2]);
         smtcVarDec4Field(node->children[0], newSymbol, newSpecifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(VarDec4Field)
 }
 
 // done
 void smtcVarDec4Param(TreeNode* node, Symbol* funcSymbol, DataType* specifier) {
     if(SMTC_PROD_CHECK_1(node, ID)) {
-        if(search4Insert(SVAL(node->children[0]), NS_LVAR)) {
-            // TODO: rename and insert
-            char errMsg[256];
-            sprintf(errMsg, "Redefined function parameter \"%s\"", SVAL(node->children[0]));
-            printSmtcError(node->children[0]->lineno, 3, errMsg);
+        Param* newParam;
+        Symbol* paramSymbol;
+        SMTC_SET_FIELD(newParam)
+        newParam->name = SVAL(node->children[0]);
+        newParam->dataType = specifier;
+        SMTC_SET_SYMBOL(paramSymbol, NS_LVAR)
+        paramSymbol->name = SVAL(node->children[0]);
+        paramSymbol->dataType = specifier;
+
+        Symbol* s = search4Insert(SVAL(node->children[0]), NS_LVAR);
+        if(s) {
+            if(s->nameSrc == NS_LVAR) {
+                char errMsg[256];
+                sprintf(errMsg, "Redefined function parameter \"%s\"", SVAL(node->children[0]));
+                printSmtcError(node->children[0]->lineno, 3, errMsg);
+            }
+            else {  // NS_STRUCT
+                char errMsg[256];
+                sprintf(errMsg, "Duplicated name \"%s\"", SVAL(node->children[0]));
+                printSmtcError(node->children[0]->lineno, 3, errMsg);
+                // TODO: rename and insert ?
+                if(funcSymbol->funcData->paramList)
+                    funcSymbol->funcData->tail->next = newParam;
+                else
+                    funcSymbol->funcData->paramList = newParam;
+                funcSymbol->funcData->tail = newParam;
+                insertSymbol(paramSymbol);
+            }   
         }
         else {
-            Param* newParam;
-            Symbol* paramSymbol;
-            SET_FIELD(newParam)
-            newParam->name = SVAL(node->children[0]);
-            newParam->dataType = specifier;
             if(funcSymbol->funcData->paramList)
                 funcSymbol->funcData->tail->next = newParam;
             else
                 funcSymbol->funcData->paramList = newParam;
             funcSymbol->funcData->tail = newParam;
-            SET_SYMBOL(paramSymbol, NS_LVAR)
-            paramSymbol->dataType = specifier;
             insertSymbol(paramSymbol);
         }
     }
     else if(SMTC_PROD_CHECK_4(node, VarDec, LB, INT, RB)) {
         DataType* newSpecifier;
-        SET_SPECIFIER(newSpecifier, DT_ARRAY)
+        SMTC_SET_SPECIFIER(newSpecifier, DT_ARRAY)
         newSpecifier->array.elem = specifier;
         newSpecifier->array.size = IVAL(node->children[2]);
         smtcVarDec4Param(node->children[0], funcSymbol, newSpecifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(VarDec4Param)
 }
 
 // done
 void smtcVarDec4Var(TreeNode* node, DataType* specifier, enum NameSrc ns) {
     if(SMTC_PROD_CHECK_1(node, ID)) {
         Symbol* varSymbol;
-        SET_SYMBOL(varSymbol, ns)
+        SMTC_SET_SYMBOL(varSymbol, ns)
         varSymbol->name = SVAL(node->children[0]);
         varSymbol->dataType = specifier;
-        insertSymbol(varSymbol);
+
+        Symbol* s = search4Insert(SVAL(node->children[0]), ns);
+        if(ns == NS_GVAR) {
+            if(s) {
+                char errMsg[256];
+                if(s != fieldSymbol && s->nameSrc == NS_GVAR) {
+                    sprintf(errMsg, "Redefined variable \"%s\"", SVAL(node->children[0]));
+                    printSmtcError(node->children[0]->lineno, 3, errMsg);
+                }
+                else {  // field or NS_STRUCT
+                    sprintf(errMsg, "Duplicated name \"%s\"", SVAL(node->children[0]));
+                    printSmtcError(node->children[0]->lineno, 3, errMsg);
+                    // TODO: rename and insert ?
+                    insertSymbol(varSymbol);
+                }
+            }
+            else
+                insertSymbol(varSymbol);
+        }
+        else {  // NS_LVAR
+            if(s) {
+                char errMsg[256];
+                if(s->nameSrc == NS_LVAR) {
+                    sprintf(errMsg, "Redefined variable \"%s\"", SVAL(node->children[0]));
+                    printSmtcError(node->children[0]->lineno, 3, errMsg);
+                }
+                else {  // NS_STRUCT
+                    sprintf(errMsg, "Duplicated name \"%s\"", SVAL(node->children[0]));
+                    printSmtcError(node->children[0]->lineno, 3, errMsg);
+                    // TODO: rename and insert ?
+                    insertSymbol(varSymbol);
+                }
+            }
+            else
+                insertSymbol(varSymbol);
+        }
+        
     }
     else if(SMTC_PROD_CHECK_4(node, VarDec, LB, INT, RB)) {
         DataType* newSpecifier;
-        SET_SPECIFIER(newSpecifier, DT_ARRAY)
+        SMTC_SET_SPECIFIER(newSpecifier, DT_ARRAY)
         newSpecifier->array.elem = specifier;
         newSpecifier->array.size = IVAL(node->children[2]);
-        smtcVarDec4Var(node->children[0], newSpecifier, NS_GVAR);
+        smtcVarDec4Var(node->children[0], newSpecifier, ns);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(VarDec4Var)
 }
 
 void smtcFunDec(TreeNode* node, Symbol* funcSymbol) {
@@ -248,7 +360,8 @@ void smtcFunDec(TreeNode* node, Symbol* funcSymbol) {
     else if(SMTC_PROD_CHECK_3(node, ID, LP, RP)) {
         funcSymbol->name = SVAL(node->children[0]);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(FunDec)
 }
 
 // done
@@ -260,7 +373,8 @@ void smtcVarList(TreeNode* node, Symbol* funcSymbol) {
     else if(SMTC_PROD_CHECK_1(node, ParamDec)) {
         smtcParamDec(node->children[0], funcSymbol);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(VarList)
 }
 
 // done
@@ -269,20 +383,18 @@ void smtcParamDec(TreeNode* node, Symbol* funcSymbol) {
         DataType* specifier = smtcSpecifier(node->children[0]);
         smtcVarDec4Param(node->children[1], funcSymbol, specifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(ParamDec)
 }
 
 void smtcCompSt(TreeNode* node) {
     if(SMTC_PROD_CHECK_4(node, LC, DefList, StmtList, RC)) {
-        stackTop++;
-        if(stackTop >= MAX_SS_SIZE || stackTop < 0) {
-            // TODO: handle stack error
-        }
-        SMTC_SET_STACKTOP(stackTop)
+        //SMTC_SET_STACKTOP(stackTop)
         smtcDefList4LocalVar(node->children[1]);
         smtcStmtList(node->children[2]);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(CompSt)
 }
 
 // done
@@ -292,7 +404,8 @@ void smtcStmtList(TreeNode* node) {
         smtcStmtList(node->children[1]);
     }
     else if(node->childrenNum == 0) { /* empty */ }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(StmtList)
 }
 
 void smtcStmt(TreeNode* node) {
@@ -300,8 +413,12 @@ void smtcStmt(TreeNode* node) {
         DataType* dataType = smtcExp(node->children[0]);
     }
     else if(SMTC_PROD_CHECK_1(node, CompSt)) {
+        stackTop++;
+        if(stackTop >= MAX_SS_SIZE || stackTop < 0) {
+            // TODO: handle stack error
+        }
         smtcCompSt(node->children[0]);
-        SMTC_SET_STACKTOP(stackTop)
+        clearStackTop();
         stackTop--;
     }
     else if(SMTC_PROD_CHECK_3(node, RETURN, Exp, SEMI)) {
@@ -332,7 +449,8 @@ void smtcStmt(TreeNode* node) {
         }
         smtcStmt(node->children[4]);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Stmt)
 }
 
 // done
@@ -342,7 +460,8 @@ void smtcDefList4Field(TreeNode* node, Symbol* newSymbol) {
         smtcDefList4Field(node->children[1], newSymbol);
     }
     else if(node->childrenNum == 0) { /* empty */ }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(DefList4Field)
 }
 
 void smtcDefList4LocalVar(TreeNode* node) {
@@ -351,7 +470,8 @@ void smtcDefList4LocalVar(TreeNode* node) {
         smtcDefList4LocalVar(node->children[1]);
     }
     else if(node->childrenNum == 0) { /* empty */ }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(DefList4LocalVar)
 }
 
 // done
@@ -360,7 +480,8 @@ void smtcDef4Field(TreeNode* node, Symbol* newSymbol) {
         DataType* specifier = smtcSpecifier(node->children[0]);
         smtcDecList4Field(node->children[1], newSymbol, specifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Def4Field)
 }
 
 void smtcDef4LocalVar(TreeNode* node) {
@@ -368,7 +489,8 @@ void smtcDef4LocalVar(TreeNode* node) {
         DataType* specifier = smtcSpecifier(node->children[0]);
         smtcDecList4LocalVar(node->children[1], specifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Def4LocalVar)
 }
 
 // done
@@ -380,7 +502,8 @@ void smtcDecList4Field(TreeNode* node, Symbol* newSymbol, DataType* specifier) {
         smtcDec4Field(node->children[0], newSymbol, specifier);
         smtcDecList4Field(node->children[2], newSymbol, specifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(DecList4Field)
 }
 
 void smtcDecList4LocalVar(TreeNode* node, DataType* specifier) {
@@ -391,7 +514,8 @@ void smtcDecList4LocalVar(TreeNode* node, DataType* specifier) {
         smtcDec4LocalVar(node->children[0], specifier);
         smtcDecList4LocalVar(node->children[2], specifier);
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(DecList4LocalVar)
 }
 
 void smtcDec4Field(TreeNode* node, Symbol* newSymbol, DataType* specifier) {
@@ -401,11 +525,14 @@ void smtcDec4Field(TreeNode* node, Symbol* newSymbol, DataType* specifier) {
     else if(SMTC_PROD_CHECK_3(node, VarDec, ASSIGNOP, Exp)) {
         smtcVarDec4Field(node->children[0], newSymbol, specifier);
         DataType* type = smtcExp(node->children[2]);
+        printSmtcError(node->children[1]->lineno, 15, "Define and initialize field simutanously");
+        /*
         if(!equalDataType(type, specifier)) {
             printSmtcError(node->children[0]->lineno, 5, "Type mismatched for assignment");
-        }
+        }*/
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Dec4Field)
 }
 
 void smtcDec4LocalVar(TreeNode* node, DataType* specifier) {
@@ -419,7 +546,8 @@ void smtcDec4LocalVar(TreeNode* node, DataType* specifier) {
             printSmtcError(node->children[0]->lineno, 5, "Type mismatched for assignment");
         }
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Dec4LocalVar)
 }
 
 DataType* smtcExp(TreeNode* node) {
@@ -427,16 +555,19 @@ DataType* smtcExp(TreeNode* node) {
         DataType* typeA = smtcExp(node->children[0]);
         DataType* typeB = smtcExp(node->children[2]);
         if(equalDataType(typeA, typeB)) {
-            if(!(SMTC_PROD_CHECK_1(node->children[0], ID)) || 
-               !(SMTC_PROD_CHECK_4(node->children[0], Exp, LB, Exp, RB)) || 
-               !(SMTC_PROD_CHECK_3(node->children[0], Exp, DOT, ID))) {
+            if(!SMTC_PROD_CHECK_1(node->children[0], ID) &&
+               !SMTC_PROD_CHECK_4(node->children[0], Exp, LB, Exp, RB) &&
+               !SMTC_PROD_CHECK_3(node->children[0], Exp, DOT, ID)) {
                 printSmtcError(node->children[0]->lineno, 6, "The left-hand side of an assignment must be a variable");
             }
-            else
+            else {
+                SMTC_PRINT_ERROR(Exp)
                 return typeA;
+            }
         }
         else
             printSmtcError(node->children[0]->lineno, 5, "Type mismatched for assignment");
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, AND, Exp) || SMTC_PROD_CHECK_3(node, Exp, OR, Exp)) {
@@ -448,6 +579,7 @@ DataType* smtcExp(TreeNode* node) {
         }
         else
             printSmtcError(node->children[0]->lineno, 7, "Type mismatched for operands");
+        SMTC_PRINT_ERROR(Exp)
         return intSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, RELOP, Exp)) {
@@ -465,6 +597,7 @@ DataType* smtcExp(TreeNode* node) {
         }
         else
             printSmtcError(node->children[0]->lineno, 7, "Type mismatched for operands");
+        SMTC_PRINT_ERROR(Exp)
         return intSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, PLUS, Exp) || SMTC_PROD_CHECK_3(node, Exp, MINUS, Exp) ||
@@ -475,11 +608,14 @@ DataType* smtcExp(TreeNode* node) {
             if(typeA != intSpecifier && typeA != floatSpecifier) {
                 printSmtcError(node->children[0]->lineno, 7, "Only integers and float numbers can be involved in arithmetic operations");
             }
-            else
+            else {
+                SMTC_PRINT_ERROR(Exp)
                 return typeA;
+            }
         }
         else
             printSmtcError(node->children[0]->lineno, 7, "Type mismatched for operands");
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, LP, Exp, RP)) {
@@ -489,8 +625,10 @@ DataType* smtcExp(TreeNode* node) {
         DataType* type = smtcExp(node->children[1]);
         if(type != intSpecifier && type != floatSpecifier) {
             printSmtcError(node->children[0]->lineno, 7, "Only integers and float numbers can be involved in arithmetic operations");
+            SMTC_PRINT_ERROR(Exp)
             return errorSpecifier;
         }
+        SMTC_PRINT_ERROR(Exp)
         return type;
     }
     else if(SMTC_PROD_CHECK_2(node, NOT, Exp)) {
@@ -498,68 +636,88 @@ DataType* smtcExp(TreeNode* node) {
         if(type != intSpecifier) {
             printSmtcError(node->children[0]->lineno, 7, "Type mismatched for operands");
         }
+        SMTC_PRINT_ERROR(Exp)
         return intSpecifier;
     }
     else if(SMTC_PROD_CHECK_4(node, ID, LP, Args, RP)) {
-        Symbol* funcSymbol = search4Use(SVAL(node->children[0]), NS_FUNC);
-        if(funcSymbol) {
-            if(funcSymbol->nameSrc == NS_FUNC) {
-                smtcArgs(node->children[2], funcSymbol, funcSymbol->funcData->paramList);
-                return funcSymbol->funcData->retType;
-            }
-            else {
+        // TODO: func duplicated name
+        Symbol* s = search4Use(SVAL(node->children[0]), NS_FUNC);
+        if(s) {
+            smtcArgs(node->children[2], s, s->funcData->paramList);
+            SMTC_PRINT_ERROR(Exp)
+            return s->funcData->retType;
+        }
+        else {
+            s = search4Use(SVAL(node->children[0]), NS_LVAR);
+            if(!s)
+                s = search4Use(SVAL(node->children[0]), NS_GVAR);
+            if(s) {
                 char errMsg[256];
                 sprintf(errMsg, "\"%s\" is not a function", SVAL(node->children[0]));
                 printSmtcError(node->children[0]->lineno, 11, errMsg);
-                smtcArgs(node->children[2], NULL, NULL);
             }
+            else {
+                char errMsg[256];
+                sprintf(errMsg, "Undefined function \"%s\"", SVAL(node->children[0]));
+                printSmtcError(node->children[0]->lineno, 2, errMsg);
+                smtcArgs(node->children[2], NULL, NULL);
+            } 
         }
-        else {
-            char errMsg[256];
-            sprintf(errMsg, "Undefined function \"%s\"", SVAL(node->children[0]));
-            printSmtcError(node->children[0]->lineno, 2, errMsg);
-            smtcArgs(node->children[2], NULL, NULL);
-        }
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, ID, LP, RP)) {
-        Symbol* funcSymbol = search4Use(SVAL(node->children[0]), NS_FUNC);
-        if(funcSymbol) {
-            if(funcSymbol->nameSrc == NS_FUNC) {
-                return funcSymbol->funcData->retType;
-            }
-            else {
+        // TODO: func duplicated name
+        Symbol* s = search4Use(SVAL(node->children[0]), NS_FUNC);
+        if(s) {
+            SMTC_PRINT_ERROR(Exp)
+            return s->funcData->retType;
+        }
+        else {
+            s = search4Use(SVAL(node->children[0]), NS_LVAR);
+            if(!s)
+                s = search4Use(SVAL(node->children[0]), NS_GVAR);
+            if(s) {
                 char errMsg[256];
                 sprintf(errMsg, "\"%s\" is not a function", SVAL(node->children[0]));
                 printSmtcError(node->children[0]->lineno, 11, errMsg);
             }
+            else {
+                char errMsg[256];
+                sprintf(errMsg, "Undefined function \"%s\"", SVAL(node->children[0]));
+                printSmtcError(node->children[0]->lineno, 2, errMsg);
+            }    
         }
-        else {
-            char errMsg[256];
-            sprintf(errMsg, "Undefined function \"%s\"", SVAL(node->children[0]));
-            printSmtcError(node->children[0]->lineno, 2, errMsg);    
-        }
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_4(node, Exp, LB, Exp, RB)) {
         DataType* typeA = smtcExp(node->children[0]);
         DataType* typeB = smtcExp(node->children[2]);
+        // TODO: type check
+        if(typeB != intSpecifier) {
+            printSmtcError(node->children[2]->lineno, 12, "Expecting \"int\" type when accessing values of an array");
+        }
         if(SMTC_TYPE_CHECK(typeA, DT_ARRAY)) {
+            SMTC_PRINT_ERROR(Exp)
             return typeA->array.elem;
         }
         else
             printSmtcError(node->children[0]->lineno, 10, "Expecting \"array\" type before \"[]\"");
-        if(typeB != intSpecifier) {
-            printSmtcError(node->children[2]->lineno, 12, "Expecting \"int\" type when accessing values of an array");
-        }
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, DOT, ID)) {
+    #ifdef SMTC_DEBUG
+        fprintf(stderr, "Search for Use: name: %s, ns: Field\n", SVAL(node->children[2]));
+    #endif
         DataType* type = smtcExp(node->children[0]);
+        // TODO: type check
         if(SMTC_TYPE_CHECK(type, DT_STRUCT)) {
             Field* fieldList = type->structure.fieldList;
             while(fieldList) {
                 if(strcmp(fieldList->name, SVAL(node->children[2])) == 0) {
+                    SMTC_PRINT_ERROR(Exp)
                     return fieldList->dataType;
                 }
                 fieldList = fieldList->next;
@@ -572,28 +730,35 @@ DataType* smtcExp(TreeNode* node) {
         }
         else
             printSmtcError(node->children[0]->lineno, 13, "Expecting \"struct\" type before \".\"");
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_1(node, ID)) {
         Symbol* s = search4Use(SVAL(node->children[0]), NS_LVAR);
         if(!s)
             s = search4Use(SVAL(node->children[0]), NS_GVAR);
-        if(s)
+        if(s) {
+            SMTC_PRINT_ERROR(Exp)
             return s->dataType;
+        }
         else {
             char errMsg[256];
             sprintf(errMsg, "Undefined variable \"%s\"", SVAL(node->children[0]));
             printSmtcError(node->children[0]->lineno, 1, errMsg);
         }
+        SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_1(node, INT)) {
+        SMTC_PRINT_ERROR(Exp)
         return intSpecifier;
     }
     else if(SMTC_PROD_CHECK_1(node, FLOAT)) {
+        SMTC_PRINT_ERROR(Exp)
         return floatSpecifier;
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Exp)
     return errorSpecifier;;
 }
 
@@ -603,7 +768,7 @@ void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
         DataType* type = smtcExp(node->children[0]);
         if(funcSymbol) {
             if(paramList) {
-                if(paramList->dataType != type) {
+                if(!equalDataType(paramList->dataType, type)) {
                     char errMsg[256];
                     sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
                     printSmtcError(node->children[0]->lineno, 9, errMsg);
@@ -624,7 +789,7 @@ void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
         DataType* type = smtcExp(node->children[0]);
         if(funcSymbol) {
             if(paramList) {
-                if(paramList->dataType != type) {
+                if(!equalDataType(paramList->dataType, type)) {
                     char errMsg[256];
                     sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
                     printSmtcError(node->children[0]->lineno, 9, errMsg);
@@ -642,7 +807,8 @@ void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
             }
         }
     }
-    else STMC_ERROR
+    else SMTC_ERROR
+    SMTC_PRINT_ERROR(Args)
 }
 
 
@@ -686,8 +852,9 @@ bool equalDataType(DataType* typeA, DataType* typeB) {
 
 void printSmtcError(int lineno, int errorno, char* msg) {
 	smtcErrorNum++;
+    // TODO: stdout or stderr??
     if(errorno == 0)
-        fprintf(stderr, "Error at Line %d: Unknown error, %s.\n",  lineno, msg);
+        printf("Error at Line %d: Unknown error, %s.\n",  lineno, msg);
     else
-	    fprintf(stderr, "Error type %d at Line %d: %s.\n", errorno, lineno, msg);
+	    printf("Error type %d at Line %d: %s.\n", errorno, lineno, msg);
 }

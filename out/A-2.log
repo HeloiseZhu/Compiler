@@ -1,0 +1,437 @@
+NEW NODE: TYPE
+[  1]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  1]              ID: compare
+NEW NODE: LP
+[  1]              LP: (
+NEW NODE: TYPE
+[  1]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  1]              ID: a
+NEW NODE: VarDec
+NEW NODE: COMMA
+[  1]           COMMA: ,
+NEW NODE: ParamDec
+NEW NODE: TYPE
+[  1]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  1]              ID: b
+NEW NODE: VarDec
+NEW NODE: RP
+[  1]              RP: )
+NEW NODE: ParamDec
+NEW NODE: VarList
+NEW NODE: VarList
+NEW NODE: FunDec
+NEW NODE: LC
+[  1]              LC: {
+NEW NODE: IF
+[  2]              IF: if
+NEW NODE: DefList
+NEW NODE: LP
+[  2]              LP: (
+NEW NODE: ID
+[  2]              ID: a
+NEW NODE: RELOP
+[  2]           RELOP: ==
+NEW NODE: Exp
+NEW NODE: ID
+[  2]              ID: b
+NEW NODE: RP
+[  2]              RP: )
+NEW NODE: Exp
+NEW NODE: Exp
+NEW NODE: RETURN
+[  3]          RETURN: return
+NEW NODE: INT
+[  3]             INT: 0
+NEW NODE: Exp
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: IF
+[  4]              IF: if
+NEW NODE: Stmt
+NEW NODE: LP
+[  4]              LP: (
+NEW NODE: ID
+[  4]              ID: a
+NEW NODE: RELOP
+[  4]           RELOP: <
+NEW NODE: Exp
+NEW NODE: ID
+[  4]              ID: b
+NEW NODE: RP
+[  4]              RP: )
+NEW NODE: Exp
+NEW NODE: Exp
+NEW NODE: RETURN
+[  5]          RETURN: return
+NEW NODE: MINUS
+[  5]           MINUS: -
+NEW NODE: INT
+[  5]             INT: 1
+NEW NODE: Exp
+NEW NODE: SEMI
+[  5]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: IF
+[  6]              IF: if
+NEW NODE: Stmt
+NEW NODE: LP
+[  6]              LP: (
+NEW NODE: ID
+[  6]              ID: a
+NEW NODE: RELOP
+[  6]           RELOP: >
+NEW NODE: Exp
+NEW NODE: ID
+[  6]              ID: b
+NEW NODE: RP
+[  6]              RP: )
+NEW NODE: Exp
+NEW NODE: Exp
+NEW NODE: RETURN
+[  7]          RETURN: return
+NEW NODE: INT
+[  7]             INT: 1
+NEW NODE: Exp
+NEW NODE: SEMI
+[  7]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RC
+[  8]              RC: }
+NEW NODE: Stmt
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[ 10]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 10]              ID: main
+NEW NODE: LP
+[ 10]              LP: (
+NEW NODE: RP
+[ 10]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[ 10]              LC: {
+NEW NODE: TYPE
+[ 11]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 11]              ID: x
+NEW NODE: VarDec
+NEW NODE: COMMA
+[ 11]           COMMA: ,
+NEW NODE: Dec
+NEW NODE: ID
+[ 11]              ID: y
+NEW NODE: VarDec
+NEW NODE: COMMA
+[ 11]           COMMA: ,
+NEW NODE: Dec
+NEW NODE: ID
+[ 11]              ID: z
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 11]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: DecList
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: ID
+[ 12]              ID: x
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: ASSIGNOP
+[ 12]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: INT
+[ 12]             INT: 1
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 12]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 13]              ID: y
+NEW NODE: ASSIGNOP
+[ 13]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: INT
+[ 13]             INT: 2
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 13]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 14]              ID: z
+NEW NODE: ASSIGNOP
+[ 14]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: INT
+[ 14]             INT: 3
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 14]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ID
+[ 15]              ID: compare
+NEW NODE: LP
+[ 15]              LP: (
+NEW NODE: ID
+[ 15]              ID: x
+NEW NODE: COMMA
+[ 15]           COMMA: ,
+NEW NODE: Exp
+NEW NODE: ID
+[ 15]              ID: y
+NEW NODE: RP
+[ 15]              RP: )
+NEW NODE: Exp
+NEW NODE: Args
+NEW NODE: Args
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 15]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: ID
+[ 16]              ID: campare
+NEW NODE: LP
+[ 16]              LP: (
+NEW NODE: ID
+[ 16]              ID: y
+NEW NODE: COMMA
+[ 16]           COMMA: ,
+NEW NODE: Exp
+NEW NODE: ID
+[ 16]              ID: x
+NEW NODE: RP
+[ 16]              RP: )
+NEW NODE: Exp
+NEW NODE: Args
+NEW NODE: Args
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 16]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RETURN
+[ 17]          RETURN: return
+NEW NODE: ID
+[ 17]              ID: z
+NEW NODE: SEMI
+[ 17]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: RC
+[ 18]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: a, ns: 3
+Insert Symbol: name: a
+------------------------------
+stack 1:
+	name: a, src: LVAR
+stack 0:
+------------------------------
+[DEBUG] Finish Analysing VarDec4Param.
+[DEBUG] Finish Analysing ParamDec.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: b, ns: 3
+Insert Symbol: name: b
+------------------------------
+stack 1:
+	name: b, src: LVAR
+	name: a, src: LVAR
+stack 0:
+------------------------------
+[DEBUG] Finish Analysing VarDec4Param.
+[DEBUG] Finish Analysing ParamDec.
+[DEBUG] Finish Analysing VarList.
+[DEBUG] Finish Analysing VarList.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: compare, ns: 0
+Insert Symbol: name: compare
+------------------------------
+stack 1:
+	name: b, src: LVAR
+	name: a, src: LVAR
+stack 0:
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: a, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: b, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: a, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: b, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: a, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: b, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: x, ns: 3
+Insert Symbol: name: x
+------------------------------
+stack 1:
+	name: x, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+Search for Insert: name: y, ns: 3
+Insert Symbol: name: y
+------------------------------
+stack 1:
+	name: y, src: LVAR
+	name: x, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+Search for Insert: name: z, ns: 3
+Insert Symbol: name: z
+------------------------------
+stack 1:
+	name: z, src: LVAR
+	name: y, src: LVAR
+	name: x, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: x, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: y, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: z, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: compare, ns: 0
+Search for Use: name: x, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: y, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Args.
+[DEBUG] Finish Analysing Args.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: campare, ns: 0
+Search for Use: name: campare, ns: 3
+Search for Use: name: campare, ns: 2
+Search for Use: name: y, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: x, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Args.
+[DEBUG] Finish Analysing Args.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: z, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: compare, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

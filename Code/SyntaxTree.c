@@ -4,7 +4,7 @@
 
 TreeNode* createNode(NodeType type, int lineno) {
 #ifdef DEBUGGING
-    printf("NEW NODE: %s\n", NT2STR(type));
+    fprintf(stderr, "NEW NODE: %s\n", NT2STR(type));
 #endif    
     TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
     node->nodeType = type;

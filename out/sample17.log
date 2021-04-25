@@ -1,0 +1,76 @@
+NEW NODE: TYPE
+[  1]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  1]              ID: main
+NEW NODE: LP
+[  1]              LP: (
+NEW NODE: RP
+[  1]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[  2]              LC: {
+NEW NODE: STRUCT
+[  3]          STRUCT: struct
+NEW NODE: ID
+[  3]              ID: Position
+NEW NODE: ID
+[  3]              ID: pos
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  4]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Position, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: pos, ns: 3
+Insert Symbol: name: pos
+------------------------------
+stack 1:
+	name: pos, src: LVAR
+stack 0:
+	name: main, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

@@ -1,0 +1,403 @@
+NEW NODE: STRUCT
+[  1]          STRUCT: struct
+NEW NODE: ID
+[  1]              ID: Sith
+NEW NODE: LC
+[  1]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  2]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  2]              ID: force
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  2]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  3]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  3]              ID: darkness
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  4]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  4]              ID: vader
+NEW NODE: SEMI
+[  4]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: STRUCT
+[  6]          STRUCT: struct
+NEW NODE: ID
+[  6]              ID: Jedi
+NEW NODE: LC
+[  6]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  7]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  7]              ID: power
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  7]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  8]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  8]              ID: calm
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  8]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  9]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  9]              ID: yoda
+NEW NODE: SEMI
+[  9]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[ 11]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 11]              ID: battle
+NEW NODE: LP
+[ 11]              LP: (
+NEW NODE: RP
+[ 11]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[ 11]              LC: {
+NEW NODE: TYPE
+[ 12]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 12]              ID: result
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 12]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: IF
+[ 13]              IF: if
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: LP
+[ 13]              LP: (
+NEW NODE: ID
+[ 13]              ID: vader
+NEW NODE: DOT
+[ 13]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 13]              ID: force
+NEW NODE: Exp
+NEW NODE: RELOP
+[ 13]           RELOP: >=
+NEW NODE: ID
+[ 13]              ID: yoda
+NEW NODE: DOT
+[ 13]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 13]              ID: power
+NEW NODE: Exp
+NEW NODE: RP
+[ 13]              RP: )
+NEW NODE: Exp
+NEW NODE: ID
+[ 14]              ID: result
+NEW NODE: ASSIGNOP
+[ 14]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: ID
+[ 14]              ID: vader
+NEW NODE: DOT
+[ 14]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 14]              ID: darkness
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 14]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ELSE
+[ 15]            ELSE: else
+NEW NODE: IF
+[ 15]              IF: if
+NEW NODE: LP
+[ 15]              LP: (
+NEW NODE: ID
+[ 15]              ID: vader
+NEW NODE: DOT
+[ 15]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 15]              ID: force
+NEW NODE: Exp
+NEW NODE: RELOP
+[ 15]           RELOP: <=
+NEW NODE: INT
+[ 15]             INT: 3
+NEW NODE: Exp
+NEW NODE: RP
+[ 15]              RP: )
+NEW NODE: Exp
+NEW NODE: ID
+[ 16]              ID: result
+NEW NODE: ASSIGNOP
+[ 16]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: ID
+[ 16]              ID: vader
+NEW NODE: DOT
+[ 16]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 16]              ID: force
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 16]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: ELSE
+[ 17]            ELSE: else
+NEW NODE: ID
+[ 18]              ID: result
+NEW NODE: ASSIGNOP
+[ 18]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: ID
+[ 18]              ID: yoda
+NEW NODE: DOT
+[ 18]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 18]              ID: darkness
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 18]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: Stmt
+NEW NODE: Stmt
+NEW NODE: RETURN
+[ 19]          RETURN: return
+NEW NODE: ID
+[ 19]              ID: result
+NEW NODE: SEMI
+[ 19]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: RC
+[ 20]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: force, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: darkness, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Sith, ns: 1
+Insert Symbol: name: Sith
+------------------------------
+stack 0:
+	name: Sith, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: vader, ns: 2
+Insert Symbol: name: vader
+------------------------------
+stack 0:
+	name: vader, src: GVAR
+	name: Sith, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: power, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: calm, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Jedi, ns: 1
+Insert Symbol: name: Jedi
+------------------------------
+stack 0:
+	name: Jedi, src: STRUCT
+	name: vader, src: GVAR
+	name: Sith, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: yoda, ns: 2
+Insert Symbol: name: yoda
+------------------------------
+stack 0:
+	name: yoda, src: GVAR
+	name: Jedi, src: STRUCT
+	name: vader, src: GVAR
+	name: Sith, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: battle, ns: 0
+Insert Symbol: name: battle
+------------------------------
+stack 1:
+stack 0:
+	name: battle, src: FUNC
+	name: yoda, src: GVAR
+	name: Jedi, src: STRUCT
+	name: vader, src: GVAR
+	name: Sith, src: STRUCT
+------------------------------
+Search for Insert: name: result, ns: 3
+Insert Symbol: name: result
+------------------------------
+stack 1:
+	name: result, src: LVAR
+stack 0:
+	name: battle, src: FUNC
+	name: yoda, src: GVAR
+	name: Jedi, src: STRUCT
+	name: vader, src: GVAR
+	name: Sith, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: force, ns: Field
+Search for Use: name: vader, ns: 3
+Search for Use: name: vader, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: power, ns: Field
+Search for Use: name: yoda, ns: 3
+Search for Use: name: yoda, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: result, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: darkness, ns: Field
+Search for Use: name: vader, ns: 3
+Search for Use: name: vader, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: force, ns: Field
+Search for Use: name: vader, ns: 3
+Search for Use: name: vader, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: result, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: force, ns: Field
+Search for Use: name: vader, ns: 3
+Search for Use: name: vader, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: result, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: darkness, ns: Field
+Search for Use: name: yoda, ns: 3
+Search for Use: name: yoda, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing Stmt.
+Search for Use: name: result, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: battle, src: FUNC
+	name: yoda, src: GVAR
+	name: Jedi, src: STRUCT
+	name: vader, src: GVAR
+	name: Sith, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

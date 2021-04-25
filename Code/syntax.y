@@ -184,7 +184,6 @@ StructSpecifier :
 		addChildNode($$, 4, $1, $2, $3, errNode);
 	}
 	/*| error Tag {
-		// TODO
 		printSyntaxError(@1.first_line, "expecting specifier \"struct\""); 
 		$$ = createNode(NT_StructSpecifier, @$.first_line);
 		TreeNode* errNode = createNode(NT_ERROR, @1.first_line);
@@ -384,7 +383,6 @@ Stmt :
 		addChildNode($$, 2, $1, errNode);
 	}
 	/*| Exp error SEMI {
-		// TODO
 		printSyntaxError(@2.first_line, "expecting correct expression"); 
 		$$ = createNode(NT_Stmt, @$.first_line);
 		TreeNode* errNode = createNode(NT_ERROR, @2.first_line);
@@ -570,7 +568,6 @@ Exp :
 		addChildNode($$, 3, $1, $2, $3);
 	}
 	| MINUS Exp {
-		// TODO
 		$$ = createNode(NT_Exp, @$.first_line);
 		addChildNode($$, 2, $1, $2);
 	}
@@ -750,7 +747,7 @@ void printSyntaxError(int lineno, char* msg) {
 	if(str) {
 		errorText = str;
 	}	
-	fprintf(stderr, "Error type B at Line %d: syntax error near \"%s\", %s.\n", 
+	printf("Error type B at Line %d: syntax error near \"%s\", %s.\n", 
 			lineno, errorText, msg);
 }
 
@@ -760,7 +757,7 @@ void yyerror(char* msg) {
 		if(str) {
 			errorText = str;
 		}
-		fprintf(stderr, "Error type B at Line %d: syntax error near \"%s\", undefined error, maybe expecting \"}\" or correct if-else statements.\n", 
+		printf("Error type B at Line %d: syntax error near \"%s\", undefined error, maybe expecting \"}\" or correct if-else statements.\n", 
 				prevErrorLine, errorText);
 		prevCfmErrorLine = prevErrorLine;
 	}

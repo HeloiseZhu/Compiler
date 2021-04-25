@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "SyntaxTree.h"
+#include "SymbolTable.h"
+#include "SemanticAnalysis.h"
 
 extern FILE* yyin;
 extern int yylineno;
@@ -41,14 +43,18 @@ int main(int argc, char** argv) {
 		yyrestart(f);
 		yyparse();
 		if(lexErrorNum == 0 && stdSyntaxErrorNum == 0) {
-			printSyntaxTree(root, 0);
+			//printSyntaxTree(root, 0);
 		}
 		else if(stdSyntaxErrorNum != 0) {
 			yyerror("");
 		}
 	#ifdef DEBUGGING
-		printf("Miss %d Syntax Error.\n", stdSyntaxErrorNum-syntaxErrorNum);
+		fprintf(stderr, "Miss %d Syntax Error.\n", stdSyntaxErrorNum-syntaxErrorNum);
 	#endif
+	#ifdef SMTC_DEBUG
+		fprintf(stderr, "IN SEMANTIC ANALYSIS\n");
+	#endif
+		smtcProgram(root);
 	}
 
 	return 0;

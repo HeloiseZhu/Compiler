@@ -1,0 +1,430 @@
+NEW NODE: STRUCT
+[  1]          STRUCT: struct
+NEW NODE: ID
+[  1]              ID: Movie
+NEW NODE: LC
+[  1]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  2]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  2]              ID: title
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  2]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  3]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  3]              ID: rate
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  4]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  4]              ID: django
+NEW NODE: SEMI
+[  4]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: STRUCT
+[  6]          STRUCT: struct
+NEW NODE: ID
+[  6]              ID: French
+NEW NODE: LC
+[  6]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  7]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  7]              ID: male
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  7]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  8]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  8]              ID: age
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  8]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  9]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  9]              ID: sophi
+NEW NODE: SEMI
+[  9]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: STRUCT
+[ 11]          STRUCT: struct
+NEW NODE: ID
+[ 11]              ID: Drink
+NEW NODE: LC
+[ 11]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[ 12]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 12]              ID: name
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 12]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[ 13]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[ 13]              ID: amount
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 13]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[ 14]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: SEMI
+[ 14]            SEMI: ;
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[ 16]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 16]              ID: main
+NEW NODE: LP
+[ 16]              LP: (
+NEW NODE: RP
+[ 16]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[ 16]              LC: {
+NEW NODE: STRUCT
+[ 17]          STRUCT: struct
+NEW NODE: ID
+[ 17]              ID: Movie
+NEW NODE: ID
+[ 17]              ID: inglorious
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: ASSIGNOP
+[ 17]        ASSIGNOP: =
+NEW NODE: ID
+[ 17]              ID: django
+NEW NODE: SEMI
+[ 17]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: STRUCT
+[ 18]          STRUCT: struct
+NEW NODE: ID
+[ 18]              ID: French
+NEW NODE: ID
+[ 18]              ID: marso
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: ASSIGNOP
+[ 18]        ASSIGNOP: =
+NEW NODE: ID
+[ 18]              ID: sophi
+NEW NODE: SEMI
+[ 18]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: STRUCT
+[ 19]          STRUCT: struct
+NEW NODE: ID
+[ 19]              ID: Drunk
+NEW NODE: ID
+[ 19]              ID: cola
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 19]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RETURN
+[ 20]          RETURN: return
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: ID
+[ 20]              ID: marso
+NEW NODE: DOT
+[ 20]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 20]              ID: age
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 20]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RC
+[ 21]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: title, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: rate, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Movie, ns: 1
+Insert Symbol: name: Movie
+------------------------------
+stack 0:
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: django, ns: 2
+Insert Symbol: name: django
+------------------------------
+stack 0:
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: male, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: age, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: French, ns: 1
+Insert Symbol: name: French
+------------------------------
+stack 0:
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: sophi, ns: 2
+Insert Symbol: name: sophi
+------------------------------
+stack 0:
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: name, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: amount, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Drink, ns: 1
+Insert Symbol: name: Drink
+------------------------------
+stack 0:
+	name: Drink, src: STRUCT
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Drink, src: STRUCT
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Movie, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: inglorious, ns: 3
+Insert Symbol: name: inglorious
+------------------------------
+stack 1:
+	name: inglorious, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Drink, src: STRUCT
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+Search for Use: name: django, ns: 3
+Search for Use: name: django, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: French, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: marso, ns: 3
+Insert Symbol: name: marso
+------------------------------
+stack 1:
+	name: marso, src: LVAR
+	name: inglorious, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Drink, src: STRUCT
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+Search for Use: name: sophi, ns: 3
+Search for Use: name: sophi, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Drunk, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: cola, ns: 3
+Insert Symbol: name: cola
+------------------------------
+stack 1:
+	name: cola, src: LVAR
+	name: marso, src: LVAR
+	name: inglorious, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Drink, src: STRUCT
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: age, ns: Field
+Search for Use: name: marso, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Drink, src: STRUCT
+	name: sophi, src: GVAR
+	name: French, src: STRUCT
+	name: django, src: GVAR
+	name: Movie, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

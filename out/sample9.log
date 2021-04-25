@@ -1,0 +1,145 @@
+NEW NODE: TYPE
+[  1]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  1]              ID: func
+NEW NODE: LP
+[  1]              LP: (
+NEW NODE: TYPE
+[  1]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  1]              ID: i
+NEW NODE: VarDec
+NEW NODE: RP
+[  1]              RP: )
+NEW NODE: ParamDec
+NEW NODE: VarList
+NEW NODE: FunDec
+NEW NODE: LC
+[  2]              LC: {
+NEW NODE: RETURN
+[  3]          RETURN: return
+NEW NODE: DefList
+NEW NODE: ID
+[  3]              ID: i
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: RC
+[  4]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[  6]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  6]              ID: main
+NEW NODE: LP
+[  6]              LP: (
+NEW NODE: RP
+[  6]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[  7]              LC: {
+NEW NODE: ID
+[  8]              ID: func
+NEW NODE: DefList
+NEW NODE: LP
+[  8]              LP: (
+NEW NODE: INT
+[  8]             INT: 1
+NEW NODE: Exp
+NEW NODE: COMMA
+[  8]           COMMA: ,
+NEW NODE: INT
+[  8]             INT: 2
+NEW NODE: Exp
+NEW NODE: RP
+[  8]              RP: )
+NEW NODE: Args
+NEW NODE: Args
+NEW NODE: Exp
+NEW NODE: SEMI
+[  8]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RC
+[  9]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+Search for Insert: name: i, ns: 3
+Insert Symbol: name: i
+------------------------------
+stack 1:
+	name: i, src: LVAR
+stack 0:
+------------------------------
+[DEBUG] Finish Analysing VarDec4Param.
+[DEBUG] Finish Analysing ParamDec.
+[DEBUG] Finish Analysing VarList.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: func, ns: 0
+Insert Symbol: name: func
+------------------------------
+stack 1:
+	name: i, src: LVAR
+stack 0:
+	name: func, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: i, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: func, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: func, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: func, ns: 0
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Args.
+[DEBUG] Finish Analysing Args.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: func, src: FUNC
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

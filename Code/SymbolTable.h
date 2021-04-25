@@ -61,8 +61,11 @@ struct Symbol_ {
 unsigned int hash_pjw(char* name);
 void init();
 Symbol* search4Insert(char* name, enum NameSrc ns);
-Symbol* search4Field(char* name, Symbol* newSymbol);
+Symbol* search4Field(char* name);
 void insertSymbol(Symbol* newSymbol);
 Symbol* search4Use(char* name, enum NameSrc ns);
+
+void clearStackTop();
+void printSymbolStack();
 
 #endif

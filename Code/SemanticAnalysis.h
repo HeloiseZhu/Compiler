@@ -5,32 +5,36 @@
 #include "SyntaxTree.h"
 #include <string.h>
 
-//#define STMC_DEGUB
-#ifdef STMC_DEGUB
-#define STMC_ERROR \
+#define SMTC_DEBUG
+//
+#ifdef SMTC_DEBUG
+#define SMTC_ERROR \
     fprintf(stderr, "[DEBUG] Error in semantic analysis.\n");
 #else
-#define STMC_ERROR while(0);    // TODO
+#define SMTC_ERROR while(0);    // TODO
 #endif
-
+//
+#ifdef SMTC_DEBUG
+#define SMTC_PRINT_ERROR(msg) \
+    fprintf(stderr, "[DEBUG] Finish Analysing %s.\n", #msg);
+#else
+#define SMTC_PRINT_ERROR(msg) \
+     while(0);    // TODO
+#endif
 
 #define SMTC_SET_STACKTOP(top) \
     symbolStack[top] = NULL;
-
-#define SET_SPECIFIER(newSpecifier, dt) \
+#define SMTC_SET_SPECIFIER(newSpecifier, dt) \
     newSpecifier = (DataType*)malloc(sizeof(DataType)); \
     newSpecifier->kind = dt;
-#define SET_FIELD(newField) \
+#define SMTC_SET_FIELD(newField) \
     newField = (Field*)malloc(sizeof(Field)); \
     newField->next = NULL;
-#define SET_SYMBOL(newSymbol, ns) \
+#define SMTC_SET_SYMBOL(newSymbol, ns) \
     newSymbol = (Symbol*)malloc(sizeof(Symbol)); \
     newSymbol->nameSrc = ns; \
     newSymbol->next = NULL; \
     newSymbol->stackNext = NULL;
-#define SET_BASIC_SYMBOL(newSymbol, basicType) \
-    newSymbol->dataType->basic = basicType;
-
 #define SMTC_TYPE_CHECK(dataType, k) \
     (dataType && dataType->kind == k)
 
@@ -69,26 +73,6 @@
     node->children[5]->nodeType == NT_##t5 && \
     node->children[6]->nodeType == NT_##t6)
 
-#define SMTC_PROD_HANDLER_1(node, t0) \
-    smtc##t0(node->children[0]);
-#define SMTC_PROD_HANDLER_2(node, t0, t1) \
-    smtc##t0(node->children[0]); \
-    smtc##t1(node->children[1]);
-#define SMTC_PROD_HANDLER_3(node, t0, t1, t2) \
-    smtc##t0(node->children[0]); \
-    smtc##t1(node->children[1]); \
-    smtc##t2(node->children[2]);
-#define SMTC_PROD_HANDLER_4(node, t0, t1, t2, t3) \
-    smtc##t0(node->children[0]); \
-    smtc##t1(node->children[1]); \
-    smtc##t2(node->children[2]); \
-    smtc##t3(node->children[3]);
-#define SMTC_PROD_HANDLER_5(node, t0, t1, t2, t3, t4) \
-    smtc##t0(node->children[0]); \
-    smtc##t1(node->children[1]); \
-    smtc##t2(node->children[2]); \
-    smtc##t3(node->children[3]); \
-    smtc##t4(node->children[4]);
 
 void smtcProgram(TreeNode* root);
 void smtcExtDefList(TreeNode* node);

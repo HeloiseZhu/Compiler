@@ -1,0 +1,266 @@
+NEW NODE: STRUCT
+[  1]          STRUCT: struct
+NEW NODE: ID
+[  1]              ID: Temp1
+NEW NODE: LC
+[  2]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  3]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  3]              ID: i
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  4]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  4]              ID: j
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  4]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  5]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: SEMI
+[  5]            SEMI: ;
+NEW NODE: ExtDef
+NEW NODE: STRUCT
+[  7]          STRUCT: struct
+NEW NODE: ID
+[  7]              ID: Temp2
+NEW NODE: LC
+[  8]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  9]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  9]              ID: x
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  9]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[ 10]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[ 10]              ID: y
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 10]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[ 11]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: SEMI
+[ 11]            SEMI: ;
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[ 13]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 13]              ID: main
+NEW NODE: LP
+[ 13]              LP: (
+NEW NODE: RP
+[ 13]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[ 13]              LC: {
+NEW NODE: STRUCT
+[ 14]          STRUCT: struct
+NEW NODE: ID
+[ 14]              ID: Temp1
+NEW NODE: ID
+[ 14]              ID: t1
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 14]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: STRUCT
+[ 15]          STRUCT: struct
+NEW NODE: ID
+[ 15]              ID: Temp2
+NEW NODE: ID
+[ 15]              ID: t2
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 15]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: ID
+[ 16]              ID: t1
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: ASSIGNOP
+[ 16]        ASSIGNOP: =
+NEW NODE: Exp
+NEW NODE: ID
+[ 16]              ID: t2
+NEW NODE: SEMI
+[ 16]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Exp
+NEW NODE: Stmt
+NEW NODE: RC
+[ 17]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: i, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: j, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Temp1, ns: 1
+Insert Symbol: name: Temp1
+------------------------------
+stack 0:
+	name: Temp1, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: x, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: y, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Temp2, ns: 1
+Insert Symbol: name: Temp2
+------------------------------
+stack 0:
+	name: Temp2, src: STRUCT
+	name: Temp1, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Temp2, src: STRUCT
+	name: Temp1, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Temp1, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: t1, ns: 3
+Insert Symbol: name: t1
+------------------------------
+stack 1:
+	name: t1, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Temp2, src: STRUCT
+	name: Temp1, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Temp2, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: t2, ns: 3
+Insert Symbol: name: t2
+------------------------------
+stack 1:
+	name: t2, src: LVAR
+	name: t1, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Temp2, src: STRUCT
+	name: Temp1, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: t1, ns: 3
+[DEBUG] Finish Analysing Exp.
+Search for Use: name: t2, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Temp2, src: STRUCT
+	name: Temp1, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.

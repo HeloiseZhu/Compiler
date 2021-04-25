@@ -1,0 +1,342 @@
+NEW NODE: STRUCT
+[  1]          STRUCT: struct
+NEW NODE: ID
+[  1]              ID: Food
+NEW NODE: LC
+[  1]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  2]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  2]              ID: name
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  2]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  3]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  3]              ID: price
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  3]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: STRUCT
+[  4]          STRUCT: struct
+NEW NODE: ID
+[  4]              ID: Content
+NEW NODE: LC
+[  4]              LC: {
+NEW NODE: OptTag
+NEW NODE: TYPE
+[  5]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[  5]              ID: title
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  5]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[  6]            TYPE: float
+NEW NODE: Specifier
+NEW NODE: ID
+[  6]              ID: type
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  6]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  7]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  7]              ID: types
+NEW NODE: VarDec
+NEW NODE: SEMI
+[  7]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[  8]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: ID
+[  8]              ID: ham
+NEW NODE: SEMI
+[  8]            SEMI: ;
+NEW NODE: VarDec
+NEW NODE: ExtDecList
+NEW NODE: ExtDef
+NEW NODE: STRUCT
+[ 10]          STRUCT: struct
+NEW NODE: ID
+[ 10]              ID: Burger
+NEW NODE: LC
+[ 10]              LC: {
+NEW NODE: OptTag
+NEW NODE: STRUCT
+[ 11]          STRUCT: struct
+NEW NODE: ID
+[ 11]              ID: Food
+NEW NODE: ID
+[ 11]              ID: meat
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: ASSIGNOP
+[ 11]        ASSIGNOP: =
+NEW NODE: ID
+[ 11]              ID: ham
+NEW NODE: SEMI
+[ 11]            SEMI: ;
+NEW NODE: Exp
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: TYPE
+[ 12]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 12]              ID: buck
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 12]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RC
+[ 13]              RC: }
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: SEMI
+[ 13]            SEMI: ;
+NEW NODE: ExtDef
+NEW NODE: TYPE
+[ 15]            TYPE: int
+NEW NODE: Specifier
+NEW NODE: ID
+[ 15]              ID: main
+NEW NODE: LP
+[ 15]              LP: (
+NEW NODE: RP
+[ 15]              RP: )
+NEW NODE: FunDec
+NEW NODE: LC
+[ 15]              LC: {
+NEW NODE: STRUCT
+[ 16]          STRUCT: struct
+NEW NODE: ID
+[ 16]              ID: Burger
+NEW NODE: ID
+[ 16]              ID: hamburger
+NEW NODE: Tag
+NEW NODE: StructSpecifier
+NEW NODE: Specifier
+NEW NODE: VarDec
+NEW NODE: SEMI
+[ 16]            SEMI: ;
+NEW NODE: Dec
+NEW NODE: DecList
+NEW NODE: Def
+NEW NODE: RETURN
+[ 17]          RETURN: return
+NEW NODE: DefList
+NEW NODE: DefList
+NEW NODE: ID
+[ 17]              ID: hamburger
+NEW NODE: DOT
+[ 17]             DOT: .
+NEW NODE: Exp
+NEW NODE: ID
+[ 17]              ID: buck
+NEW NODE: Exp
+NEW NODE: SEMI
+[ 17]            SEMI: ;
+NEW NODE: Stmt
+NEW NODE: RC
+[ 18]              RC: }
+NEW NODE: StmtList
+NEW NODE: StmtList
+NEW NODE: CompSt
+NEW NODE: ExtDef
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: ExtDefList
+NEW NODE: Program
+Miss 0 Syntax Error.
+IN SEMANTIC ANALYSIS
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: name, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: price, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing OptTag.
+Search for Insert: name: title, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: type, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Content, ns: 1
+Insert Symbol: name: Content
+------------------------------
+stack 0:
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: types, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Food, ns: 1
+Insert Symbol: name: Food
+------------------------------
+stack 0:
+	name: Food, src: STRUCT
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: ham, ns: 2
+Insert Symbol: name: ham
+------------------------------
+stack 0:
+	name: ham, src: GVAR
+	name: Food, src: STRUCT
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing ExtDecList.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing OptTag.
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Food, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: meat, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+Search for Use: name: ham, ns: 3
+Search for Use: name: ham, ns: 2
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+Search for Insert: name: buck, ns: Field
+[DEBUG] Finish Analysing VarDec4Field.
+[DEBUG] Finish Analysing Dec4Field.
+[DEBUG] Finish Analysing DecList4Field.
+[DEBUG] Finish Analysing Def4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+[DEBUG] Finish Analysing DefList4Field.
+Search for Insert: name: Burger, ns: 1
+Insert Symbol: name: Burger
+------------------------------
+stack 0:
+	name: Burger, src: STRUCT
+	name: ham, src: GVAR
+	name: Food, src: STRUCT
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+[DEBUG] Finish Analysing Specifier.
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing FunDec.
+Search for Insert: name: main, ns: 0
+Insert Symbol: name: main
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Burger, src: STRUCT
+	name: ham, src: GVAR
+	name: Food, src: STRUCT
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing StructSpecifier.
+Search for Use: name: Burger, ns: 1
+[DEBUG] Finish Analysing Specifier.
+Search for Insert: name: hamburger, ns: 3
+Insert Symbol: name: hamburger
+------------------------------
+stack 1:
+	name: hamburger, src: LVAR
+stack 0:
+	name: main, src: FUNC
+	name: Burger, src: STRUCT
+	name: ham, src: GVAR
+	name: Food, src: STRUCT
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing VarDec4Var.
+[DEBUG] Finish Analysing Dec4LocalVar.
+[DEBUG] Finish Analysing DecList4LocalVar.
+[DEBUG] Finish Analysing Def4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+[DEBUG] Finish Analysing DefList4LocalVar.
+Search for Use: name: buck, ns: Field
+Search for Use: name: hamburger, ns: 3
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Exp.
+[DEBUG] Finish Analysing Stmt.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing StmtList.
+[DEBUG] Finish Analysing CompSt.
+Clear Stack Top
+------------------------------
+stack 1:
+stack 0:
+	name: main, src: FUNC
+	name: Burger, src: STRUCT
+	name: ham, src: GVAR
+	name: Food, src: STRUCT
+	name: Content, src: STRUCT
+------------------------------
+[DEBUG] Finish Analysing ExtDef.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing ExtDefList.
+[DEBUG] Finish Analysing Program.
