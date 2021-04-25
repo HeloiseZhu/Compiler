@@ -4,15 +4,10 @@
 #include <stdio.h>
 
 //#define DEBUGGING
-// TODO: nodeType to string
-#define NT2STR(x) \
-	nodeTypeString[x]
-#define IVAL(x) \
-	x->nodeValue.intVal
-#define FVAL(x) \
-	x->nodeValue.floatVal
-#define SVAL(x) \
-	x->nodeValue.textVal
+#define NT2STR(x) nodeTypeString[x]
+#define IVAL(x) x->nodeValue.intVal
+#define FVAL(x) x->nodeValue.floatVal
+#define SVAL(x) x->nodeValue.textVal
 
 static const char* nodeTypeString[49] = {
 	// Lex

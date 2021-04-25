@@ -198,6 +198,7 @@ OptTag :
 	}
 	| /* empty */ {
 		$$ = createNode(NT_OptTag, @$.first_line);
+		SVAL($$)[0] = '\0';
 	}
 	;
 Tag : 

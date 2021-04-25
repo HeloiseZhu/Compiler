@@ -53,7 +53,7 @@ WHILE 		while
 INT_ERROR	0+(0|[1-9][0-9]*)
 INT			0|[1-9][0-9]*
 FLOAT		{digit}+\.{digit}+|({digit}+|{digit}+\.|\.{digit}+|{digit}+\.{digit}+)[Ee][+-]?{digit}+
-FLOAT_ERROR	{digit}+\.|\.{digit}+|({digit}+|{digit}+\.|\.{digit}+|{digit}+\.{digit}+)[Ee][+-]?({digit}*\.{digit}*)?|\.[Ee][+-]?{digit}+
+FLOAT_ERROR	{digit}+\.|\.{digit}+|({digit}+|{digit}+\.|\.{digit}+|{digit}+\.{digit}+)[Ee][+-]?({digit}*\.{digit}*)?|\.[Ee][+-]{digit}+
 ID			{letter}({letter}|{digit})*
 HEX_ERROR	(0x|0X)?[a-fA-F0-9]+
 WHITESPACE  [ \t\r]+
