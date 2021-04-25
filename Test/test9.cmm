@@ -1,0 +1,9 @@
+int a;
+int b c,d;
+
+int func(x) {
+	int e;
+	int m n,p;
+	if() {
+		i++;
+	}else{}

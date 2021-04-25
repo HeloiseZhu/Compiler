@@ -1,0 +1,7 @@
+int func2(int x) {
+	int y=1
+}
+
+int func1() {
+	x+1;
+}}
