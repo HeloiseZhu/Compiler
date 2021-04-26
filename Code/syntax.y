@@ -708,7 +708,6 @@ Exp :
 	/*| Exp DOT error {
 		printSyntaxError(@3.first_line, "expecting correct field name");
 		$$ = createNode(NT_Exp, @$.first_line);
-		//printf("1ERROR: %d\n", (int)$3);
 		TreeNode* errNode = createNode(NT_ERROR, @3.first_line);
 		addChildNode($$, 3, $1, $2, errNode);
 	}*/
@@ -765,6 +764,6 @@ void yyerror(char* msg) {
 	prevErrorLine = yylineno;
 	errorText = yytext;
 #ifdef DEBUGGING
-	fprintf(stderr,"[bison]Error type B at Line %d: %s, near \"%s\"\n", yylineno, msg, yytext);
+	fprintf(stderr,"[SYN DEGUB] Error type B at Line %d: %s, near \"%s\"\n", yylineno, msg, yytext);
 #endif
 }

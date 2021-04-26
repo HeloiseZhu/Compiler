@@ -49,10 +49,10 @@ int main(int argc, char** argv) {
 			yyerror("");
 		}
 	#ifdef DEBUGGING
-		fprintf(stderr, "Miss %d Syntax Error.\n", stdSyntaxErrorNum-syntaxErrorNum);
+		fprintf(stderr, "[SYN DEGUB] Miss %d Syntax Error.\n", stdSyntaxErrorNum-syntaxErrorNum);
 	#endif
 	#ifdef SMTC_DEBUG
-		fprintf(stderr, "IN SEMANTIC ANALYSIS\n");
+		fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
 	#endif
 		smtcProgram(root);
 	}

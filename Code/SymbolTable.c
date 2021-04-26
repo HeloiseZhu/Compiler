@@ -1,9 +1,10 @@
 #include "SymbolTable.h"
 #include "SemanticAnalysis.h"
 
-HashBucket symbolTable[MAX_ST_SIZE];
-StackEle symbolStack[MAX_SS_SIZE];
+int stackSize;
 int stackTop;
+HashBucket symbolTable[MAX_ST_SIZE];
+StackEle* symbolStack;
 extern DataType* intSpecifier;
 extern DataType* floatSpecifier;
 extern DataType* errorSpecifier;
@@ -22,9 +23,11 @@ unsigned int hash_pjw(char* name) {
 }
 
 void init() {
+    stackSize = 128;
     stackTop = 0;
+    symbolStack = (StackEle*)malloc(sizeof(StackEle)*stackSize);
     memset(symbolTable, 0, MAX_ST_SIZE * sizeof(HashBucket));
-    memset(symbolStack, 0, MAX_SS_SIZE * sizeof(StackEle));
+    memset(symbolStack, 0, stackSize * sizeof(StackEle));
     intSpecifier = (DataType*)malloc(sizeof(DataType));
     intSpecifier->kind = DT_BASIC;
     intSpecifier->basic = BASIC_INT;
@@ -38,7 +41,7 @@ void init() {
 
 Symbol* search4Insert(char* name, enum NameSrc ns) {
 #ifdef SMTC_DEBUG
-    fprintf(stderr, "Search for Insert: name: %s, ns: %d\n", name, ns);
+    fprintf(stderr, "[SEM DEGUB] Search for Insert: name: %s, ns: %d\n", name, ns);
     //printSymbolStack();
 #endif
     int idx = hash_pjw(name);
@@ -95,7 +98,7 @@ Symbol* search4Insert(char* name, enum NameSrc ns) {
 
 Symbol* search4Field(char* name) {
 #ifdef SMTC_DEBUG
-    fprintf(stderr, "Search for Insert: name: %s, ns: Field\n", name);
+    fprintf(stderr, "[SEM DEGUB] Search for Insert: name: %s, ns: Field\n", name);
     //printSymbolStack();
 #endif
     int idx = hash_pjw(name);
@@ -139,14 +142,14 @@ void insertSymbol(Symbol* newSymbol) {
         break;
     }
 #ifdef SMTC_DEBUG
-    fprintf(stderr, "Insert Symbol: name: %s\n", newSymbol->name);
+    fprintf(stderr, "[SEM DEGUB] Insert Symbol: name: %s\n", newSymbol->name);
     printSymbolStack();
 #endif
 }
 
 Symbol* search4Use(char* name, enum NameSrc ns) {
 #ifdef SMTC_DEBUG
-    fprintf(stderr, "Search for Use: name: %s, ns: %d\n", name, ns);
+    fprintf(stderr, "[SEM DEGUB] Search for Use: name: %s, ns: %d\n", name, ns);
     //printSymbolStack();
 #endif
     int tableIndex = hash_pjw(name);
@@ -174,8 +177,8 @@ Symbol* search4Use(char* name, enum NameSrc ns) {
     return NULL;
 }
 
-void clearStackTop() {
-    if(stackTop <= 0 || stackTop >= MAX_SS_SIZE)
+void stackPop() {
+    if(stackTop <= 0 || stackTop >= stackSize)
         return;
     Symbol* head = symbolStack[stackTop];
     Symbol* p = NULL;
@@ -203,10 +206,29 @@ void clearStackTop() {
         head = tmp;
     }
     symbolStack[stackTop] = NULL;
+    stackTop--;
 #ifdef SMTC_DEBUG
-    fprintf(stderr, "Clear Stack Top\n");
+    fprintf(stderr, "[SEM DEGUB] Clear Stack Top\n");
     printSymbolStack();
 #endif
+}
+
+void stackPush() {
+    // handle stack error
+    // assert(stackTop >= 0);
+    if(stackTop == stackSize-1) {
+        stackSize *= 2;
+        StackEle* newStack = (StackEle*)malloc(sizeof(StackEle)*stackSize);
+        memset(newStack, 0, stackSize * sizeof(StackEle));
+        int i=0;
+        while(i<=stackTop) {
+            newStack[i] = symbolStack[i];
+            i++;
+        }
+        free(symbolStack);
+        symbolStack = newStack;
+    }
+    stackTop++;
 }
 
 void printSymbolStack() {

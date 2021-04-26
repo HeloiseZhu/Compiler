@@ -12,7 +12,7 @@
 		yycolumn += yyleng;
 	#ifdef DEBUGGING
 	#define LEX_DEBUG(x) \
-		fprintf(stderr, "[%3d] %15s: %s\n", yylineno, #x, yytext);
+		fprintf(stderr, "[LEX DEBUG] [%3d] %15s: %s\n", yylineno, #x, yytext);
 	#else
 	#define LEX_DEBUG(x) \
 		while(0);

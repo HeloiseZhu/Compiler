@@ -1,13 +1,11 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define MAX_ST_SIZE 16384
-#define MAX_SS_SIZE 128
 
 typedef struct DataType_ DataType;
 typedef struct FuncData_ FuncData;
@@ -65,7 +63,8 @@ Symbol* search4Field(char* name);
 void insertSymbol(Symbol* newSymbol);
 Symbol* search4Use(char* name, enum NameSrc ns);
 
-void clearStackTop();
+void stackPop();
+void stackPush();
 void printSymbolStack();
 
 #endif

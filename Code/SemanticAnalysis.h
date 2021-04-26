@@ -3,27 +3,26 @@
 
 #include "SymbolTable.h"
 #include "SyntaxTree.h"
+#include <stdbool.h>
 #include <string.h>
 
 #define SMTC_DEBUG
 //
 #ifdef SMTC_DEBUG
 #define SMTC_ERROR \
-    fprintf(stderr, "[DEBUG] Error in semantic analysis.\n");
+    fprintf(stderr, "[SEM DEGUB] Error in semantic analysis.\n");
 #else
-#define SMTC_ERROR while(0);    // TODO
+#define SMTC_ERROR while(0);
 #endif
 //
 #ifdef SMTC_DEBUG
 #define SMTC_PRINT_ERROR(msg) \
-    fprintf(stderr, "[DEBUG] Finish Analysing %s.\n", #msg);
+    fprintf(stderr, "[SEM DEGUB] Finish Analysing %s.\n", #msg);
 #else
 #define SMTC_PRINT_ERROR(msg) \
-     while(0);    // TODO
+     while(0);
 #endif
 
-#define SMTC_SET_STACKTOP(top) \
-    symbolStack[top] = NULL;
 #define SMTC_SET_SPECIFIER(newSpecifier, dt) \
     newSpecifier = (DataType*)malloc(sizeof(DataType)); \
     newSpecifier->kind = dt;
@@ -84,7 +83,7 @@ void smtcOptTag(TreeNode* node, Symbol* newSymbol);
 Symbol* smtcTag(TreeNode* node);
 void smtcVarDec4Field(TreeNode* node, Symbol* newSymbol, DataType* specifier);
 void smtcVarDec4Param(TreeNode* node, Symbol* funcSymbol, DataType* specifier);
-void smtcVarDec4Var(TreeNode* node, DataType* specifier, enum NameSrc ns);
+DataType* smtcVarDec4Var(TreeNode* node, DataType* specifier, enum NameSrc ns);
 void smtcFunDec(TreeNode* node, Symbol* funcSymbol);
 void smtcVarList(TreeNode* node, Symbol* funcSymbol);
 void smtcParamDec(TreeNode* node, Symbol* funcSymbol);
