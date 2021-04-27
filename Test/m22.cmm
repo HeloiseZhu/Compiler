@@ -1,4 +1,4 @@
-int fib(int n) //Note: recursive function
+int fib(int n)
 {
 
     if (n == 1 || n == 2) {
@@ -27,7 +27,7 @@ int calculations() {
                                                                          + fib(1 == 1) + cp.x + 1 >= 2 - 2 <= 1);
 }
 
-//HELL OF 'REDEFINITION'
+
 int hell() {
     struct out {
         struct in {
@@ -61,7 +61,7 @@ int initialization() {
     h = -!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!h;
 }
 
-//epsilon cases
+
 struct {
     int a;
 };

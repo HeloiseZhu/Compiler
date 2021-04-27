@@ -1,0 +1,18 @@
+int a[2];
+
+float f0(int x, int y) {
+
+}
+
+int f1(int aa[10], float bb[10]) {
+	float x;
+	a = bb;
+	a = aa;
+	x = f0(aa[1], bb[1.5]);
+	x[0] = 1;
+	x();
+	f0(a[0]);
+	f0(a[0],a[1],a[2]);
+	x.xx = x;
+	return aa[2];
+}

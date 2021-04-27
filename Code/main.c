@@ -44,18 +44,17 @@ int main(int argc, char** argv) {
 		yyparse();
 		if(lexErrorNum == 0 && stdSyntaxErrorNum == 0) {
 			//printSyntaxTree(root, 0);
+		#ifdef SMTC_DEBUG
+			fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
+		#endif
+			smtcProgram(root);
 		}
 		else if(stdSyntaxErrorNum != 0) {
 			yyerror("");
+		#ifdef DEBUGGING
+			fprintf(stderr, "[SYN DEGUB] Miss %d Syntax Error.\n", stdSyntaxErrorNum-syntaxErrorNum);
+		#endif
 		}
-	#ifdef DEBUGGING
-		fprintf(stderr, "[SYN DEGUB] Miss %d Syntax Error.\n", stdSyntaxErrorNum-syntaxErrorNum);
-	#endif
-	#ifdef SMTC_DEBUG
-		fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
-	#endif
-		smtcProgram(root);
 	}
-
 	return 0;
 }

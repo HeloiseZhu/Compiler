@@ -21,7 +21,7 @@ int go_to_nijigen() {
   }
   if (s) {
     play_ff_14();
-  } else /* ??? */ {
+  } else {
     play_os_labs();
   }
   {

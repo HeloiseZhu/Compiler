@@ -1,0 +1,28 @@
+struct A {
+	int a[10][2];
+	int b;
+	int c;
+};
+
+struct B {
+	struct A a;
+	struct B b;
+	struct C c;
+};
+
+int main() {
+	struct A aa;
+	struct B bb;
+	int arr[3][3] = 0;
+	aa.a = arr;
+	aa.b = 1.2;
+	aa.c = 0;
+	if(aa.c) {
+		int a = 0;
+		a = aa.b+1;
+	} else {
+		bb.a = aa;
+		bb.c = aa;
+	}
+	return aa.c;
+}

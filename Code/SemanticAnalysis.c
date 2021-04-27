@@ -631,7 +631,7 @@ DataType* smtcExp(TreeNode* node) {
         // TODO: func duplicated name
         Symbol* s = search4Use(SVAL(node->children[0]), NS_FUNC);
         if(s) {
-            smtcArgs(node->children[2], s, s->funcData->paramList);
+            smtcArgs(node->children[2], s, s->funcData->paramList, true);
             SMTC_PRINT_ERROR(Exp)
             return s->funcData->retType;
         }
@@ -648,7 +648,7 @@ DataType* smtcExp(TreeNode* node) {
                 char errMsg[256];
                 sprintf(errMsg, "Undefined function \"%s\"", SVAL(node->children[0]));
                 printSmtcError(node->children[0]->lineno, 2, errMsg);
-                smtcArgs(node->children[2], NULL, NULL);
+                smtcArgs(node->children[2], NULL, NULL, false);
             } 
         }
         SMTC_PRINT_ERROR(Exp)
@@ -696,12 +696,12 @@ DataType* smtcExp(TreeNode* node) {
         return errorSpecifier;
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, DOT, ID)) {
-    #ifdef SMTC_DEBUG
-        fprintf(stderr, "[SEM DEGUB] Search for Use: name: %s, ns: Field\n", SVAL(node->children[2]));
-    #endif
         DataType* type = smtcExp(node->children[0]);
         // TODO: type check
         if(SMTC_TYPE_CHECK(type, DT_STRUCT)) {
+        #ifdef SMTC_DEBUG
+            fprintf(stderr, "[SEM DEGUB] Search for Use: name: %s, ns: Field\n", SVAL(node->children[2]));
+        #endif
             Field* fieldList = type->structure.fieldList;
             while(fieldList) {
                 if(strcmp(fieldList->name, SVAL(node->children[2])) == 0) {
@@ -749,33 +749,35 @@ DataType* smtcExp(TreeNode* node) {
 }
 
 // done
-void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
+void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList, bool flag) {
     if(SMTC_PROD_CHECK_3(node, Exp, COMMA, Args)) {
         DataType* type = smtcExp(node->children[0]);
         if(funcSymbol) {
             if(paramList) {
-                if(!equalDataType(paramList->dataType, type)) {
+                if(!equalDataType(paramList->dataType, type) && flag) {
                     char errMsg[256];
                     sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
                     printSmtcError(node->children[0]->lineno, 9, errMsg);
+                    smtcArgs(node->children[2], funcSymbol, paramList->next, false);
                 }
-                smtcArgs(node->children[2], funcSymbol, paramList->next);
+                else
+                    smtcArgs(node->children[2], funcSymbol, paramList->next, true);
             }
             else {
                 char errMsg[256];
                 sprintf(errMsg, "Too many arguments for function \"%s\"", funcSymbol->name);
                 printSmtcError(node->children[0]->lineno, 9, errMsg);
-                smtcArgs(node->children[2], funcSymbol, NULL);
+                smtcArgs(node->children[2], funcSymbol, NULL, false);
             }
         }
         else
-            smtcArgs(node->children[2], NULL, NULL);        
+            smtcArgs(node->children[2], NULL, NULL, false);        
     }
     else if(SMTC_PROD_CHECK_1(node, Exp)) {
         DataType* type = smtcExp(node->children[0]);
         if(funcSymbol) {
             if(paramList) {
-                if(!equalDataType(paramList->dataType, type)) {
+                if(!equalDataType(paramList->dataType, type) && flag) {
                     char errMsg[256];
                     sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
                     printSmtcError(node->children[0]->lineno, 9, errMsg);
@@ -804,13 +806,13 @@ bool equalDataType(DataType* typeA, DataType* typeB) {
     if(typeA == errorSpecifier || typeB == errorSpecifier)
         return true;
     if(typeA->kind == DT_ARRAY && typeB->kind == DT_ARRAY) {
-        DataType* pA = typeA;
-        DataType* pB = typeB;
+        DataType* pA = typeA->array.elem;
+        DataType* pB = typeB->array.elem;
         while(pA && pB) {
             if(pA->kind == pB->kind) {
                 if(pA->kind == DT_ARRAY) {
-                    pA = typeA->array.elem;
-                    pB = typeB->array.elem;
+                    pA = pA->array.elem;
+                    pB = pB->array.elem;
                 }
                 else 
                     return (pA == pB);

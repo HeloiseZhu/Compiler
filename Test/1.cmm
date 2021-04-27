@@ -1,0 +1,14 @@
+float f;
+
+struct A {
+	int b[10][2];
+};
+
+struct A A(int a, int c[10], int d[2][2], int e[3][3][3]) {
+	int f = 12;
+	struct A aa;
+	aa.b = d;
+	c[2] = a;
+	e[2][2] = d;
+	return aa;
+}

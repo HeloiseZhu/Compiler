@@ -1,0 +1,15 @@
+struct A {
+	struct A {
+		int a[2];
+		float b;
+	} aa;
+	float bb;
+};
+
+struct A func(int aa[2]) {
+	struct A tmp;
+	tmp.aa = tmp;
+	tmp.bb = 1.0;
+	tmp.b = 1.2;
+	return tmp;
+}

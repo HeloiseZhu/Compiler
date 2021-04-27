@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define SMTC_DEBUG
+//#define SMTC_DEBUG
 //
 #ifdef SMTC_DEBUG
 #define SMTC_ERROR \
@@ -99,7 +99,7 @@ void smtcDecList4LocalVar(TreeNode* node, DataType* specifier);
 void smtcDec4Field(TreeNode* node, Symbol* newSymbol, DataType* specifier);
 void smtcDec4LocalVar(TreeNode* node, DataType* specifier);
 DataType* smtcExp(TreeNode* node);
-void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList);
+void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList, bool flag);
 
 bool equalDataType(DataType* typeA, DataType* typeB);
 void printSmtcError(int lineno, int errorno, char* msg);
