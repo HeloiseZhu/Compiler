@@ -37,6 +37,28 @@ void init() {
     errorSpecifier = (DataType*)malloc(sizeof(DataType));
     fieldSymbol = (Symbol*)malloc(sizeof(Symbol));
     errorSymbol = (Symbol*)malloc(sizeof(Symbol));
+    Symbol* readFuncSymbol = NULL;
+    Symbol* writeFuncSymbol = NULL;
+    SMTC_SET_SYMBOL(readFuncSymbol, NS_FUNC)
+    readFuncSymbol->name = (char*)malloc(sizeof(char)*8);
+    strcpy(readFuncSymbol->name, "read");
+    readFuncSymbol->funcData = (FuncData*)malloc(sizeof(FuncData));
+    readFuncSymbol->funcData->retType = intSpecifier;
+    readFuncSymbol->funcData->paramList = NULL;
+    readFuncSymbol->funcData->tail = NULL;
+    SMTC_SET_SYMBOL(writeFuncSymbol, NS_FUNC)
+    writeFuncSymbol->name = (char*)malloc(sizeof(char)*8);
+    strcpy(writeFuncSymbol->name, "write");
+    writeFuncSymbol->funcData = (FuncData*)malloc(sizeof(FuncData));
+    writeFuncSymbol->funcData->retType = intSpecifier;
+    Field* writeParam = NULL;
+    SMTC_SET_FIELD(writeParam)
+    writeParam->name = NULL;
+    writeParam->dataType = intSpecifier;
+    writeFuncSymbol->funcData->paramList = writeParam;
+    writeFuncSymbol->funcData->tail = writeParam;
+    insertSymbol(readFuncSymbol);
+    insertSymbol(writeFuncSymbol);
 }
 
 Symbol* search4Insert(char* name, enum NameSrc ns) {

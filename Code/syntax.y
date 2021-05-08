@@ -4,7 +4,7 @@
 	#include "SyntaxTree.h"
 	//#define YYSTYPE TreeNode*
 
-	TreeNode* root;
+	TreeNode* root = NULL;
 	int syntaxErrorNum = 0;
 	int stdSyntaxErrorNum = 0;
 	int prevErrorLine = 0;
