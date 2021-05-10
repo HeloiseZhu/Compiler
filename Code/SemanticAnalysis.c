@@ -411,20 +411,20 @@ void smtcStmt(TreeNode* node) {
     }
     else if(SMTC_PROD_CHECK_3(node, RETURN, Exp, SEMI)) {
         DataType* dataType = smtcExp(node->children[1]);
-        if(dataType != tmpFuncSymbol->funcData->retType) {
+        if(!equalDataType(dataType, tmpFuncSymbol->funcData->retType)) {
             printSmtcError(node->children[1]->lineno, 8, "Type mismatched for return");
         }
     }
     else if(SMTC_PROD_CHECK_5(node, IF, LP, Exp, RP, Stmt)) {
         DataType* dataType = smtcExp(node->children[2]);
-        if(dataType != intSpecifier) {
+        if(!equalDataType(dataType, intSpecifier)) {
             printSmtcError(node->children[1]->lineno, 7, "Expecting \"int\" type between \"(\"\")\"");
         }
         smtcStmt(node->children[4]);
     }
     else if(SMTC_PROD_CHECK_7(node, IF, LP, Exp, RP, Stmt, ELSE, Stmt)) {
         DataType* dataType = smtcExp(node->children[2]);
-        if(dataType != intSpecifier) {
+        if(!equalDataType(dataType, intSpecifier)) {
             printSmtcError(node->children[1]->lineno, 7, "Expecting \"int\" type between \"(\"\")\"");
         }
         smtcStmt(node->children[4]);
@@ -432,7 +432,7 @@ void smtcStmt(TreeNode* node) {
     }
     else if(SMTC_PROD_CHECK_5(node, WHILE, LP, Exp, RP, Stmt)) {
         DataType* dataType = smtcExp(node->children[2]);
-        if(dataType != intSpecifier) {
+        if(!equalDataType(dataType, intSpecifier)) {
             printSmtcError(node->children[1]->lineno, 7, "Expecting \"int\" type between \"(\"\")\"");
         }
         smtcStmt(node->children[4]);
@@ -562,7 +562,7 @@ DataType* smtcExp(TreeNode* node) {
         DataType* typeA = smtcExp(node->children[0]);
         DataType* typeB = smtcExp(node->children[2]);
         if(equalDataType(typeA, typeB)) {
-            if(typeA != intSpecifier)
+            if(!equalDataType(typeA, intSpecifier))
                 printSmtcError(node->children[0]->lineno, 7, "Only integers can be involved in logical operations");
         }
         else
@@ -578,7 +578,7 @@ DataType* smtcExp(TreeNode* node) {
                 /* do nothing */
             }
             else {  // > / < / >= / <=
-                if(typeA != intSpecifier && typeA != floatSpecifier) {
+                if(!equalDataType(typeA, intSpecifier) && !equalDataType(typeA, floatSpecifier)) {
                     printSmtcError(node->children[0]->lineno, 7, "Only integers and float numbers can be involved in relational operations");
                 }
             }
@@ -593,7 +593,7 @@ DataType* smtcExp(TreeNode* node) {
         DataType* typeA = smtcExp(node->children[0]);
         DataType* typeB = smtcExp(node->children[2]);
         if(equalDataType(typeA, typeB)) {
-            if(typeA != intSpecifier && typeA != floatSpecifier) {
+            if(!equalDataType(typeA, intSpecifier) && !equalDataType(typeA, floatSpecifier)) {
                 printSmtcError(node->children[0]->lineno, 7, "Only integers and float numbers can be involved in arithmetic operations");
             }
             else {
@@ -611,7 +611,7 @@ DataType* smtcExp(TreeNode* node) {
     }
     else if(SMTC_PROD_CHECK_2(node, MINUS, Exp)) {
         DataType* type = smtcExp(node->children[1]);
-        if(type != intSpecifier && type != floatSpecifier) {
+        if(!equalDataType(type, intSpecifier) && !equalDataType(type, floatSpecifier)) {
             printSmtcError(node->children[0]->lineno, 7, "Only integers and float numbers can be involved in arithmetic operations");
             SMTC_PRINT_ERROR(Exp)
             return errorSpecifier;
@@ -621,7 +621,7 @@ DataType* smtcExp(TreeNode* node) {
     }
     else if(SMTC_PROD_CHECK_2(node, NOT, Exp)) {
         DataType* type = smtcExp(node->children[1]);
-        if(type != intSpecifier) {
+        if(!equalDataType(type, intSpecifier)) {
             printSmtcError(node->children[0]->lineno, 7, "Type mismatched for operands");
         }
         SMTC_PRINT_ERROR(Exp)
@@ -631,7 +631,7 @@ DataType* smtcExp(TreeNode* node) {
         // TODO: func duplicated name
         Symbol* s = search4Use(SVAL(node->children[0]), NS_FUNC);
         if(s) {
-            smtcArgs(node->children[2], s, s->funcData->paramList, true);
+            smtcArgs(node->children[2], s, s->funcData->paramList);
             SMTC_PRINT_ERROR(Exp)
             return s->funcData->retType;
         }
@@ -644,12 +644,13 @@ DataType* smtcExp(TreeNode* node) {
                 sprintf(errMsg, "\"%s\" is not a function", SVAL(node->children[0]));
                 printSmtcError(node->children[0]->lineno, 11, errMsg);
             }
+            /*
             else {
                 char errMsg[256];
                 sprintf(errMsg, "Undefined function \"%s\"", SVAL(node->children[0]));
                 printSmtcError(node->children[0]->lineno, 2, errMsg);
                 smtcArgs(node->children[2], NULL, NULL, false);
-            } 
+            }*/
         }
         SMTC_PRINT_ERROR(Exp)
         return errorSpecifier;
@@ -683,7 +684,7 @@ DataType* smtcExp(TreeNode* node) {
         DataType* typeA = smtcExp(node->children[0]);
         DataType* typeB = smtcExp(node->children[2]);
         // TODO: type check
-        if(typeB != intSpecifier) {
+        if(!equalDataType(typeB, intSpecifier)) {
             printSmtcError(node->children[2]->lineno, 12, "Expecting \"int\" type when accessing values of an array");
         }
         if(SMTC_TYPE_CHECK(typeA, DT_ARRAY)) {
@@ -749,29 +750,29 @@ DataType* smtcExp(TreeNode* node) {
 }
 
 // done
-void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList, bool flag) {
+void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
     if(SMTC_PROD_CHECK_3(node, Exp, COMMA, Args)) {
         DataType* type = smtcExp(node->children[0]);
         if(funcSymbol) {
             if(paramList) {
-                if(!equalDataType(paramList->dataType, type) && flag) {
+                if(!equalDataType(paramList->dataType, type)) {
                     char errMsg[256];
                     sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
                     printSmtcError(node->children[0]->lineno, 9, errMsg);
-                    smtcArgs(node->children[2], funcSymbol, paramList->next, false);
+                    //smtcArgs(node->children[2], funcSymbol, paramList->next);
                 }
-                else
-                    smtcArgs(node->children[2], funcSymbol, paramList->next, true);
+                else 
+                    smtcArgs(node->children[2], funcSymbol, paramList->next);
             }
             else {
                 char errMsg[256];
                 sprintf(errMsg, "Too many arguments for function \"%s\"", funcSymbol->name);
                 printSmtcError(node->children[0]->lineno, 9, errMsg);
-                smtcArgs(node->children[2], funcSymbol, NULL, false);
+                //smtcArgs(node->children[2], funcSymbol, NULL);
             }
         }
-        else
-            smtcArgs(node->children[2], NULL, NULL, false);        
+        /* Handled by high levels
+        else smtcArgs(node->children[2], NULL, NULL);*/        
     }
     else if(SMTC_PROD_CHECK_1(node, Exp)) {
         DataType* type = smtcExp(node->children[0]);
