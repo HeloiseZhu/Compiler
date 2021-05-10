@@ -778,12 +778,19 @@ void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
         DataType* type = smtcExp(node->children[0]);
         if(funcSymbol) {
             if(paramList) {
-                if(!equalDataType(paramList->dataType, type) && flag) {
-                    char errMsg[256];
-                    sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
-                    printSmtcError(node->children[0]->lineno, 9, errMsg);
+                if(!equalDataType(paramList->dataType, type)) {
+                    if(paramList->next) {
+                        char errMsg[256];
+                        sprintf(errMsg, "Mismatched arguments for function \"%s\"", funcSymbol->name);
+                        printSmtcError(node->children[0]->lineno, 9, errMsg);
+                    }
+                    else {
+                        char errMsg[256];
+                        sprintf(errMsg, "Inapplicable argument type for function \"%s\"", funcSymbol->name);
+                        printSmtcError(node->children[0]->lineno, 9, errMsg);
+                    }     
                 }
-                if(paramList->next) {
+                else if(paramList->next) {
                     char errMsg[256];
                     sprintf(errMsg, "Too few arguments for function \"%s\"", funcSymbol->name);
                     printSmtcError(node->children[0]->lineno, 9, errMsg);
@@ -795,6 +802,8 @@ void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList) {
                 printSmtcError(node->children[0]->lineno, 9, errMsg);
             }
         }
+        /* Handled by high levels
+        else smtcArgs(node->children[2], NULL, NULL);*/
     }
     else SMTC_ERROR
     SMTC_PRINT_ERROR(Args)
