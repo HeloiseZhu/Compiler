@@ -32,6 +32,7 @@
 #define SMTC_SET_SYMBOL(newSymbol, ns) \
     newSymbol = (Symbol*)malloc(sizeof(Symbol)); \
     newSymbol->nameSrc = ns; \
+    newSymbol->op = NULL; \
     newSymbol->next = NULL; \
     newSymbol->stackNext = NULL;
 #define SMTC_TYPE_CHECK(dataType, k) \

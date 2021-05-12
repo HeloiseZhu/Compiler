@@ -284,3 +284,44 @@ void printSymbolStack() {
     }
     fprintf(stderr, "------------------------------\n");
 }
+
+
+// Lab3
+int getsizeof(DataType* type) {
+    if(type == NULL)
+        return 0;
+    int size = 0;
+    switch (type->kind) {
+    case DT_BASIC:
+        size = 4;
+        break;
+    case DT_ARRAY:
+        size = type->array.size * getsizeof(type->array.elem);
+        break;
+    case DT_STRUCT: {
+        Field* curField = type->structure.fieldList;
+        while(curField) {
+            size += getsizeof(curField->dataType);
+            curField = curField->next;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    return size;
+}
+
+int getFieldOffset(DataType* specifier, char* field) {
+    // TODO: field is not int type?
+    assert(specifier->kind == DT_STRUCT);
+    int offset = 0;
+    Field* curField = specifier->structure.fieldList;
+    while(curField) {
+        if(strcmp(curField->name, field) == 0)
+            break;
+        offset += getsizeof(curField->dataType);
+        curField = curField->next;
+    }
+    return offset;
+}

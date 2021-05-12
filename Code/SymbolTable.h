@@ -1,9 +1,11 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "InterCode.h"
 
 #define MAX_ST_SIZE 16384
 
@@ -51,6 +53,7 @@ struct Symbol_ {
         DataType* dataType; // NS_STRUCT & NS_GVAR & NS_LVAR
         FuncData* funcData; // NS_FUNC
     };
+    Operand* op;    // NS_LVAR
     Symbol* next;
     Symbol* stackNext;
 };
@@ -66,5 +69,8 @@ Symbol* search4Use(char* name, enum NameSrc ns);
 void stackPop();
 void stackPush();
 void printSymbolStack();
+
+int getsizeof(DataType* type);
+int getFieldOffset(DataType* specifier, char* field);
 
 #endif

@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "intercode.h": "c",
+        "semanticanalysis.h": "c"
+    }
+}
