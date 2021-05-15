@@ -250,7 +250,7 @@ void smtcVarDec4Param(TreeNode* node, Symbol* funcSymbol, DataType* specifier) {
         if(paramSymbol->dataType->kind == DT_ARRAY || 
            paramSymbol->dataType->kind == DT_STRUCT) {
             // TODO: op is addr
-            paramSymbol->op->kind = OP_ADDR;
+            paramSymbol->op->kind = OP_VAR_ADDR;
         }
 
         Symbol* s = search4Insert(SVAL(node->children[0]), NS_LVAR);

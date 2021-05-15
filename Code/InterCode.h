@@ -2,7 +2,6 @@
 #define INTERCODE_H
 
 #include "SemanticAnalysis.h"
-#include <stdbool.h>
 #include <stdarg.h>
 
 typedef struct Operand_ Operand;
@@ -13,7 +12,7 @@ typedef struct ArgList_ ArgList;
 struct Operand_ {
     enum { 
         OP_VAR, OP_TEMP, OP_CONST, 
-        OP_ADDR, OP_VAR_MEM, OP_TEMP_MEM, 
+        OP_VAR_ADDR, OP_TEMP_ADDR, OP_VAR_MEM, OP_TEMP_MEM, 
         OP_LABEL, OP_RELOP
     } kind;
     union {
@@ -56,6 +55,7 @@ struct ArgList_ {
     ArgList* next;
 };
 
+
 #define SET_OPERAND(op, k) \
     op = (Operand*)malloc(sizeof(Operand)); \
     op->kind = k;
@@ -73,6 +73,7 @@ struct ArgList_ {
     n2->prev = n1; \
     n3->prev = n2;
 
+
 void initIC();
 Operand* newVar();
 Operand* newTemp();
@@ -80,6 +81,7 @@ Operand* newLabel();
 ICNode* newNode(enum ICType type, ...);
 ICNode* link(ICNode* n1, ICNode* n2);
 ICNode* placeAssign(Operand* place, Operand* right);
+DataType* getExpType(TreeNode* node);
 
 ICNode* translateProgram(TreeNode* node);
 ICNode* translateExtDefList(TreeNode* node);
@@ -99,5 +101,7 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param);
 ICNode* translateArgs(TreeNode* node, ArgList** argList);
 
 void printTranslateError(char* msg);
+char* translateOperand(Operand* op);
+void printInterCodes(ICNode* head);
 
 #endif // INTERCODE_H

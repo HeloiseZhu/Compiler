@@ -10,6 +10,7 @@ extern int yydebug;
 extern int lexErrorNum;
 extern int syntaxErrorNum;
 extern int stdSyntaxErrorNum;
+extern int translateErrorNum;
 extern int prevErrorLine;
 extern int prevCfmErrorLine;
 extern TreeNode* root;
@@ -43,6 +44,10 @@ int main(int argc, char** argv) {
 		fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
 	#endif
 		smtcProgram(root);
+		ICNode* code = translateProgram(root);
+		if(translateErrorNum == 0) {
+			printInterCodes(code);
+		}
 	}
 	else if(stdSyntaxErrorNum != 0) {
 	#ifdef DEBUGGING
