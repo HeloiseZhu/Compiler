@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-//#define SMTC_DEBUG
+#define SMTC_DEBUG
 //
 #ifdef SMTC_DEBUG
 #define SMTC_ERROR \
@@ -104,5 +104,7 @@ void smtcArgs(TreeNode* node, Symbol* funcSymbol, Field* paramList);
 
 bool equalDataType(DataType* typeA, DataType* typeB);
 void printSmtcError(int lineno, int errorno, char* msg);
+
+DataType* getExpType(TreeNode* node);
 
 #endif

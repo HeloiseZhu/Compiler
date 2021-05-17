@@ -1,5 +1,3 @@
-#include <stdarg.h>     // Uncertain parameters
-#include <stdlib.h>
 #include "SyntaxTree.h"
 
 TreeNode* createNode(NodeType type, int lineno) {

@@ -1,4 +1,5 @@
 #include "SemanticAnalysis.h"
+#include "Translate.h"
 
 extern HashBucket* symbolTable;
 extern StackEle* symbolStack;
@@ -857,4 +858,50 @@ void printSmtcError(int lineno, int errorno, char* msg) {
         printf("Error at Line %d: Unknown error, %s.\n",  lineno, msg);
     else
 	    printf("Error type %d at Line %d: %s.\n", errorno, lineno, msg);
+}
+
+
+// Lab3
+DataType* getExpType(TreeNode* node) {
+    if(SMTC_PROD_CHECK_3(node, Exp, ASSIGNOP, Exp) ||
+       SMTC_PROD_CHECK_3(node, Exp, PLUS, Exp) || SMTC_PROD_CHECK_3(node, Exp, MINUS, Exp) ||
+       SMTC_PROD_CHECK_3(node, Exp, STAR, Exp) || SMTC_PROD_CHECK_3(node, Exp, DIV, Exp)) {
+        return getExpType(node->children[0]);
+    }
+    else if(SMTC_PROD_CHECK_3(node, Exp, AND, Exp) || SMTC_PROD_CHECK_3(node, Exp, OR, Exp) ||
+            SMTC_PROD_CHECK_3(node, Exp, RELOP, Exp) || SMTC_PROD_CHECK_2(node, NOT, Exp) ||
+            SMTC_PROD_CHECK_1(node, INT)) {
+        return intSpecifier;
+    }
+    else if(SMTC_PROD_CHECK_3(node, LP, Exp, RP) || SMTC_PROD_CHECK_2(node, MINUS, Exp)) {
+        return getExpType(node->children[1]);
+    }
+    else if(SMTC_PROD_CHECK_3(node, ID, LP, RP) || SMTC_PROD_CHECK_4(node, ID, LP, Args, RP)) {
+        Symbol* funcSymbol = search4Use(SVAL(node->children[0]), NS_FUNC);
+        assert(funcSymbol != NULL);
+        return funcSymbol->funcData->retType;
+    }
+    else if(SMTC_PROD_CHECK_4(node, Exp, LB, Exp, RB)) {
+        Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
+        assert(varSymbol != NULL && varSymbol->dataType->kind == DT_ARRAY);
+        return varSymbol->dataType->array.elem;
+    }
+    else if(SMTC_PROD_CHECK_3(node, Exp, DOT, ID)) {
+        Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
+        assert(varSymbol != NULL && varSymbol->dataType->kind == DT_STRUCT);
+        Field* curField = varSymbol->dataType->structure.fieldList;
+        while(curField) {
+            if(strcmp(SVAL(node->children[2]), curField->name) == 0)
+                return curField->dataType;
+            curField = curField->next;
+        }
+        assert(0);
+    }
+    else if(SMTC_PROD_CHECK_1(node, ID)) {
+        Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
+        assert(varSymbol != NULL);
+        return varSymbol->dataType;
+    }
+    else assert(0);
+    return NULL;;
 }

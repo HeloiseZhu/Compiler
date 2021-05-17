@@ -17,6 +17,7 @@ typedef Field Param;
 typedef Symbol* HashBucket;
 typedef Symbol* StackEle;
 
+
 struct DataType_ {
     enum { DT_BASIC, DT_ARRAY, DT_STRUCT } kind;
     union {
@@ -53,7 +54,7 @@ struct Symbol_ {
         DataType* dataType; // NS_STRUCT & NS_GVAR & NS_LVAR
         FuncData* funcData; // NS_FUNC
     };
-    Operand* op;    // NS_LVAR
+    struct Operand_* op;    // NS_LVAR
     Symbol* next;
     Symbol* stackNext;
 };

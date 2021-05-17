@@ -2,6 +2,8 @@
 #define SYNTAXTREE_H
 
 #include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
 
 //#define DEBUGGING
 #define NT2STR(x) nodeTypeString[x]

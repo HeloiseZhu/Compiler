@@ -176,6 +176,7 @@ Symbol* search4Use(char* name, enum NameSrc ns) {
 #endif
     int tableIndex = hash_pjw(name);
     Symbol* p = NULL;
+    /* Lab2
     if(ns == NS_FUNC || ns == NS_STRUCT || ns == NS_GVAR) {
         p = symbolTable[tableIndex];
         while(p) {
@@ -195,6 +196,13 @@ Symbol* search4Use(char* name, enum NameSrc ns) {
             }
             stackIndex--;
         }
+    }*/
+    /* Lab3 */
+    p = symbolTable[tableIndex];
+    while(p) {
+        if(p->nameSrc == ns) 
+            return p;
+        p = p->next;
     }
     return NULL;
 }
@@ -208,6 +216,7 @@ void stackPop() {
     int idx;
     while(head) {
         // table
+        /* Lab2
         idx = hash_pjw(head->name);
         p = symbolTable[idx];
         if(p == head) {
@@ -221,7 +230,7 @@ void stackPop() {
                 }
                 p = p->next;
             }
-        }
+        }*/
         // stack
         tmp = head->stackNext;
         head->stackNext = NULL;

@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include "SyntaxTree.h"
-#include "SymbolTable.h"
 #include "SemanticAnalysis.h"
+#include "Translate.h"
 
 extern FILE* yyin;
 extern int yylineno;
@@ -26,7 +24,7 @@ int main(int argc, char** argv) {
 	FILE* in;
 	FILE* out;
 	in = fopen(argv[1], "r");
-	out = fopen(argv[2], "w+");
+	out = fopen(argv[2], "w");
 	if (!in) {
 		perror(argv[1]);
 		return 1;
@@ -39,14 +37,19 @@ int main(int argc, char** argv) {
 	yyrestart(in);
 	yyparse();
 	if(lexErrorNum == 0 && stdSyntaxErrorNum == 0) {
-		//printSyntaxTree(root, 0);
 	#ifdef SMTC_DEBUG
+		//printSyntaxTree(root, 0);
 		fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
 	#endif
 		smtcProgram(root);
-		ICNode* code = translateProgram(root);
+		ICNode* icnode = translateProgram(root);
 		if(translateErrorNum == 0) {
-			printInterCodes(code);
+		#ifdef SMTC_DEBUG
+			fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
+			printInterCodes(icnode, out);
+			fprintf(out, "[SEM DEGUB] END\n\n");
+		#endif
+			printInterCodes(optimize(icnode), out);
 		}
 	}
 	else if(stdSyntaxErrorNum != 0) {
@@ -55,6 +58,9 @@ int main(int argc, char** argv) {
 	#endif
 		yyerror("");
 	}
+
+	fclose(in);
+	fclose(out);
 
 	return 0;
 }
