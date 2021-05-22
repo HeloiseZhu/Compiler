@@ -882,14 +882,14 @@ DataType* getExpType(TreeNode* node) {
         return funcSymbol->funcData->retType;
     }
     else if(SMTC_PROD_CHECK_4(node, Exp, LB, Exp, RB)) {
-        Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
-        assert(varSymbol != NULL && varSymbol->dataType->kind == DT_ARRAY);
-        return varSymbol->dataType->array.elem;
+        DataType* type = getExpType(node->children[0]);
+        assert(type && type->kind == DT_ARRAY);
+        return type->array.elem;
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, DOT, ID)) {
-        Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
-        assert(varSymbol != NULL && varSymbol->dataType->kind == DT_STRUCT);
-        Field* curField = varSymbol->dataType->structure.fieldList;
+        DataType* type = getExpType(node->children[0]);
+        assert(type && type->kind == DT_STRUCT);
+        Field* curField = type->structure.fieldList;
         while(curField) {
             if(strcmp(SVAL(node->children[2]), curField->name) == 0)
                 return curField->dataType;
@@ -899,7 +899,7 @@ DataType* getExpType(TreeNode* node) {
     }
     else if(SMTC_PROD_CHECK_1(node, ID)) {
         Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
-        assert(varSymbol != NULL);
+        assert(varSymbol);
         return varSymbol->dataType;
     }
     else assert(0);
