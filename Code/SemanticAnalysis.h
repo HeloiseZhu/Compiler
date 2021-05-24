@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define SMTC_DEBUG
+//#define SMTC_DEBUG
 //
 #ifdef SMTC_DEBUG
 #define SMTC_ERROR \

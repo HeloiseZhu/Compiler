@@ -5,6 +5,7 @@ int labelNum = 0;
 int varNum = 0;
 Operand *zeroOp, *oneOp;
 int translateErrorNum = 0;
+ConstList* constList = NULL;
 
 extern DataType* intSpecifier;
 
@@ -92,6 +93,34 @@ ICNode* newNode(enum ICType type, ...) {
     return node;
 }
 
+// return temp operand
+Operand* getConstOp(int val) {
+    ConstList* cur = constList;
+    while(cur) {
+        if(cur->cst->val == val)
+            return cur->tmp;
+        cur = cur->next;
+    }
+    return NULL;
+}
+
+void insertConstOp(Operand* tmp, Operand* cst) {
+    if(!tmp || !cst) return;
+    ConstList* newNode = (ConstList*)malloc(sizeof(ConstList));
+    newNode->tmp = tmp;
+    newNode->cst = cst;
+    newNode->next = constList;
+    constList = newNode;
+#ifdef SMTC_DEBUG
+    /*fprintf(stderr, "----------CONST TABLE----------\n");
+    ConstList* cur = constList;
+    while(cur) {
+        fprintf(stderr, "%s | %s\n", translateOperand(cur->tmp), translateOperand(cur->cst));
+        cur = cur->next;
+    }*/
+#endif
+}
+
 ICNode* link(ICNode* n1, ICNode* n2) {
     if(n1 == NULL)
         return n2;
@@ -120,7 +149,7 @@ Operand* getVarOp(TreeNode* node) {
     if(SMTC_PROD_CHECK_1(node, ID)) {
         Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
         assert(varSymbol != NULL);
-        if(varSymbol->op->kind == OP_VAR_ADDR) {    // param
+        if(varSymbol->op->kind == OP_VAR_ADDR) {    // TODO: param
             Operand* vmem;
             SET_OPERAND(vmem, OP_VAR_MEM)
             vmem->var_no = varSymbol->op->var_no;
@@ -128,6 +157,7 @@ Operand* getVarOp(TreeNode* node) {
         }
         else
             return varSymbol->op;
+        // TODO: var of array or struct type
     }
     return NULL;
 }
@@ -192,6 +222,9 @@ ICNode* translateFunDec(TreeNode* node) {
     if(SMTC_PROD_CHECK_4(node, ID, LP, VarList, RP) || 
        SMTC_PROD_CHECK_3(node, ID, LP, RP)) {
         Symbol* funcSymbol = search4Use(SVAL(node->children[0]), NS_FUNC);
+        //
+        //if(!funcSymbol) printSymbolTable();
+        //
         assert(funcSymbol != NULL);
         ICNode* icnode1 = newNode(IC_FUNC, funcSymbol->name);
         ICNode* tail = icnode1;
@@ -247,18 +280,18 @@ ICNode* translateStmt(TreeNode* node) {
     else if(SMTC_PROD_CHECK_3(node, RETURN, Exp, SEMI)) {
         Operand* t1;
         // optimize
-        t1 = getVarOp(node->children[1]);
-        if(!t1) {
-            if(SMTC_PROD_CHECK_1(node->children[1], INT)) {
-                SET_OPERAND(t1, OP_CONST)
-                t1->val = IVAL(node->children[1]->children[0]);
-            }
-            else {
-                t1 = newTemp();
-                ICNode* icnode1 = translateExp(node->children[1], t1, NULL);
-                ICNode* icnode2 = newNode(IC_RETURN, t1);
-                return link(icnode1, icnode2);
-            }
+        if(SMTC_PROD_CHECK_1(node->children[1], ID)) {
+            t1 = getVarOp(node->children[1]);
+        }
+        else if(SMTC_PROD_CHECK_1(node->children[1], INT)) {
+            SET_OPERAND(t1, OP_CONST)
+            t1->val = IVAL(node->children[1]->children[0]);
+        }
+        else {
+            t1 = newTemp();
+            ICNode* icnode1 = translateExp(node->children[1], t1, NULL);
+            ICNode* icnode2 = newNode(IC_RETURN, t1);
+            return link(icnode1, icnode2);
         }
         return newNode(IC_RETURN, t1);
     }
@@ -349,8 +382,7 @@ ICNode* translateDec(TreeNode* node) {
         Symbol* varSymbol = search4Use(SVAL(node->children[0]->children[0]), NS_LVAR);
         assert(varSymbol != NULL);
         // optimize const
-        //DataType* type = getExpType(node->children[2]);
-        if(/*type == intSpecifier && */SMTC_PROD_CHECK_1(node->children[2], INT)) {
+        if(SMTC_PROD_CHECK_1(node->children[2], INT)) {
             Operand* constOp;
             SET_OPERAND(constOp, OP_CONST)
             constOp->val = IVAL(node->children[2]->children[0]);
@@ -372,15 +404,27 @@ ICNode* translateCond(TreeNode* node, Operand* label_true, Operand* label_false)
         Operand *t1, *t2;
         ICNode *icnode1 = NULL, *icnode2 = NULL, *icnode3 = NULL, *icnode4 = NULL;
         // optimize
-        t1 = getVarOp(node->children[0]);
-        t2 = getVarOp(node->children[2]);
-        if(!t1) {
-            /* TODO: const */
+        if(SMTC_PROD_CHECK_1(node->children[0], ID)) {
+            t1 = getVarOp(node->children[0]);
+        }
+        else if(SMTC_PROD_CHECK_1(node->children[0], INT)) {
+            // TODO
+            SET_OPERAND(t1, OP_CONST)
+            t1->val = IVAL(node->children[0]->children[0]);
+        }
+        else {
             t1 = newTemp();
             icnode1 = translateExp(node->children[0], t1, NULL);
         }
-        if(!t2) {
-            /* TODO: const */
+        if(SMTC_PROD_CHECK_1(node->children[2], ID)) {
+            t2 = getVarOp(node->children[2]);
+        }
+        else if(SMTC_PROD_CHECK_1(node->children[2], INT)) {
+            // TODO
+            SET_OPERAND(t2, OP_CONST)
+            t2->val = IVAL(node->children[2]->children[0]);
+        }
+        else {
             t2 = newTemp();
             icnode2 = translateExp(node->children[2], t2, NULL);
         }
@@ -413,8 +457,19 @@ ICNode* translateCond(TreeNode* node, Operand* label_true, Operand* label_false)
         char* relop = (char*)malloc(sizeof(char)*4);
         strcpy(relop, "!=");
         // optimize
-        t1 = getVarOp(node);;
-        if(!t1) {
+        if(SMTC_PROD_CHECK_1(node, ID)) {
+            t1 = getVarOp(node);
+        }
+        else if(SMTC_PROD_CHECK_1(node, INT)) {
+            // TODO
+            t1 = getConstOp(IVAL(node->children[0]));
+            if(!t1) {
+                t1 = newTemp();
+                icnode1 = translateExp(node, t1, NULL);
+                insertConstOp(t1, icnode1->code->assign.right);
+            }
+        }
+        else {
             t1 = newTemp();
             icnode1 = translateExp(node, t1, NULL);
         }
@@ -428,7 +483,7 @@ ICNode* translateCond(TreeNode* node, Operand* label_true, Operand* label_false)
 ICNode* translateLeftExp(TreeNode* node, Operand* place, DataType** param) {
     // TODO: optimize & test
     if(SMTC_PROD_CHECK_4(node, Exp, LB, Exp, RB)) {
-        DataType* param;
+        DataType* dt;
         Operand *t0, *t1, *t2, *offset;
         ICNode *icnode0 = NULL, *icnode1 = NULL, *icnode2 = NULL, *icnode3 = NULL;
         // optimize
@@ -445,6 +500,10 @@ ICNode* translateLeftExp(TreeNode* node, Operand* place, DataType** param) {
         }
         if(SMTC_PROD_CHECK_1(node->children[0], ID)) {
             Symbol* varSymbol = search4Use(SVAL(node->children[0]->children[0]), NS_LVAR);
+            //
+            //fprintf(stderr, "---------left exp----------\n");
+            //fprintf(stderr, "var name: %s | %s\n", SVAL(node->children[0]->children[0]),varSymbol->name);
+            //
             assert(varSymbol && varSymbol->dataType->kind == DT_ARRAY);
             if(varSymbol->op->kind == OP_VAR_ADDR) {   // param
                 SET_OPERAND(t0, OP_VAR)
@@ -453,25 +512,27 @@ ICNode* translateLeftExp(TreeNode* node, Operand* place, DataType** param) {
                 SET_OPERAND(t0, OP_VAR_ADDR)
             }
             t0->var_no = varSymbol->op->var_no;
-            param = varSymbol->dataType;
+            dt = varSymbol->dataType;
         } 
         else {
             t0 = newTemp();
-            icnode1 = translateLeftExp(node->children[0], t0, &param);
-        }  
+            icnode1 = translateLeftExp(node->children[0], t0, &dt);
+        }
+        assert(dt->kind == DT_ARRAY);
+        if(param) *param = dt->array.elem;
         if(t1->kind == OP_CONST) {
             if(t1->val == 0)
-                return newNode(IC_ASSIGN, place, t0);    // [place := &var]
+                return link(icnode1, newNode(IC_ASSIGN, place, t0));    // [place := &var]
             else {
                 SET_OPERAND(offset, OP_CONST)
-                offset->val = t1->val * getsizeof(param->array.elem);
+                offset->val = t1->val * getsizeof(dt->array.elem);
                 return link(icnode1, newNode(IC_ADD, place, t0, offset));   // [place := &var + #offset]
             }
         }
         else {
             Operand *size;
             SET_OPERAND(size, OP_CONST)
-            size->val = getsizeof(param->array.elem);
+            size->val = getsizeof(dt->array.elem);
             t2 = newTemp();
             icnode2 = newNode(IC_MUL, t2, t1, size);
             icnode3 = newNode(IC_ADD, place, t0, t2);
@@ -479,7 +540,7 @@ ICNode* translateLeftExp(TreeNode* node, Operand* place, DataType** param) {
         }
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, DOT, ID)) {
-        DataType* param;
+        DataType *dt;
         Operand *t1, *offset;
         ICNode *icnode1 = NULL, *icnode2 = NULL;
         // optimize
@@ -493,22 +554,27 @@ ICNode* translateLeftExp(TreeNode* node, Operand* place, DataType** param) {
                 SET_OPERAND(t1, OP_VAR_ADDR)
             }
             t1->var_no = varSymbol->op->var_no;
-            param = varSymbol->dataType;
+            dt = varSymbol->dataType;
         }
         else {
             t1 = newTemp();
-            icnode1 = translateLeftExp(node->children[0], t1, &param);
-            SET_OPERAND(offset, OP_CONST)
-            offset->val = getFieldOffset(param, SVAL(node->children[2]));
-            icnode2 = newNode(IC_ADD, place, t1, offset);
-            return link(icnode1, icnode2);
+            icnode1 = translateLeftExp(node->children[0], t1, &dt);
         }
         SET_OPERAND(offset, OP_CONST)
-        offset->val = getFieldOffset(param, SVAL(node->children[2]));
-        if(offset->val == 0)
-            return newNode(IC_ASSIGN, place, t1);    // [place := &var]
-        else
-            return newNode(IC_ADD, place, t1, offset);   // [place := &var + #offset]
+        offset->val = getFieldOffset(dt, SVAL(node->children[2]), param);
+        if(offset->val == 0) icnode2 = newNode(IC_ASSIGN, place, t1);   // [place := &var]
+        else icnode2 = newNode(IC_ADD, place, t1, offset);              // [place := &var + #offset]
+        return link(icnode1, icnode2);  
+    }
+    else if(SMTC_PROD_CHECK_1(node, ID)) {
+        // TODO: var of array or struct type as param
+        Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
+        assert(varSymbol != NULL);
+        Operand* var;
+        if(varSymbol->op->kind == OP_VAR_ADDR) { SET_OPERAND(var, OP_VAR) }
+        else { SET_OPERAND(var, OP_VAR_ADDR) }
+        var->var_no = varSymbol->op->var_no; 
+        return newNode(IC_ASSIGN, place, var);
     }
     else assert(0);
     return NULL;
@@ -548,10 +614,12 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
             // TODO: [!!!] array and struct assign
             t1 = newTemp();
             icnode2 = translateLeftExp(node->children[0], t1, NULL);
-            t1->kind = OP_TEMP_MEM;
-            icnode2_1 = newNode(IC_ASSIGN, t1, t2);
+            Operand* t1mem;
+            SET_OPERAND(t1mem, OP_TEMP_MEM)
+            t1mem->var_no = t1->var_no;
+            icnode2_1 = newNode(IC_ASSIGN, t1mem, t2);
             if(place)
-                icnode2_2 = placeAssign(place, t1);
+                icnode2_2 = placeAssign(place, t1mem);
             icnode2 = link(icnode2, link(icnode2_1, icnode2_2));
             return link(icnode1, icnode2);
         }
@@ -563,6 +631,7 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
         label1 = newLabel();
         label2 = newLabel();
         // TODO: place is NULL
+        if(!place)  place = newTemp();
         icnode0 = newNode(IC_ASSIGN, place, zeroOp);
         icnode1 = translateCond(node, label1, label2);
         icnode2_1 = newNode(IC_LABEL, label1);
@@ -602,8 +671,7 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
             }
         }    
         icnode3 = newNode(IC_ADD, place, t1, t2);
-        if(!place)
-            icnode3->code->binop.result = newTemp();
+        if(!place) icnode3->code->binop.result = newTemp();
         switch (node->children[1]->nodeType) {
         case NT_PLUS: icnode3->code->kind = IC_ADD; break;
         case NT_MINUS: icnode3->code->kind = IC_SUB; break;
@@ -618,7 +686,9 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
     }
     else if(SMTC_PROD_CHECK_2(node, MINUS, Exp)) {
         Operand *t1;
-        // optimize
+        // optimize negative const
+        // TODO: place is NULL
+        if(!place) place = newTemp();
         if(SMTC_PROD_CHECK_1(node->children[1], INT)) {
             SET_OPERAND(t1, OP_CONST)
             t1->val = -IVAL(node->children[1]->children[0]);
@@ -629,8 +699,6 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
             t1 = newTemp();
             icnode1 = translateExp(node->children[1], t1, NULL);
             icnode2 = newNode(IC_SUB, place, zeroOp, t1);
-            if(!place)
-                icnode2->code->binop.result = newTemp();
             return link(icnode1, icnode2);
         }   
     }
@@ -649,19 +717,20 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
             }
             return icnode1;
         }
-        ICNode* tail = icnode1;    // icnode2
+        ICNode *head = NULL, *tail = NULL;    // icnode2
         ArgList* curArg = argList;
         while(curArg) {
             ICNode* node = newNode(IC_ARG, curArg->arg);
-            tail->next = node;
-            node->prev = tail;
+            if(!head) { head = node; }
+            else { tail->next = node; node->prev = tail; }
             tail = node;
             curArg = curArg->next;
         }
+        if(!place) place = newTemp();
         ICNode* icnode3 = newNode(IC_CALL_FUNC, place, funcSymbol->name);
         tail->next = icnode3;
         icnode3->prev = tail;
-        return icnode1;
+        return link(icnode1, head);
     }
     else if(SMTC_PROD_CHECK_3(node, ID, LP, RP)) {
         ICNode* icnode;
@@ -669,8 +738,10 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
         assert(funcSymbol != NULL);
         if(strcmp("read", funcSymbol->name) == 0)
             icnode = newNode(IC_READ, place);
-        else
+        else {
+            if(!place) place = newTemp();
             icnode = newNode(IC_CALL_FUNC, place, funcSymbol->name);
+        }
         return icnode;
     }
     else if(SMTC_PROD_CHECK_4(node, Exp, LB, Exp, RB) ||
@@ -682,7 +753,7 @@ ICNode* translateExp(TreeNode* node, Operand* place, DataType** param) {
         // assign
         SET_OPERAND(tmem, OP_TEMP_MEM)
         tmem->var_no = t1->var_no;
-        icnode2 = newNode(IC_ASSIGN, place, tmem);
+        if(place) icnode2 = newNode(IC_ASSIGN, place, tmem);
         return link(icnode1, icnode2);
     }
     else if(SMTC_PROD_CHECK_1(node, ID)) {
@@ -728,21 +799,32 @@ ICNode* translateArgs(TreeNode* node, ArgList** argList) {
     t1 = getVarOp(node->children[0]);
     if(!t1 || type->kind != DT_BASIC) {
         // TODO: arg is const?
-        t1 = newTemp();
-        if(type->kind == DT_ARRAY || type->kind == DT_STRUCT)
+        if(type->kind == DT_ARRAY || type->kind == DT_STRUCT) {
+            t1 = newTemp();
             icnode1 = translateLeftExp(node->children[0], t1, NULL);
-        else   
-            icnode1 = translateExp(node->children[0], t1, NULL);
+        }
+        else {  // DT_BASIC
+            if(SMTC_PROD_CHECK_1(node->children[0], INT)) {
+                t1 = getConstOp(IVAL(node->children[0]->children[0]));
+                if(!t1) {
+                    t1 = newTemp();
+                    icnode1 = translateExp(node->children[0], t1, NULL);
+                    insertConstOp(t1, icnode1->code->assign.right);
+                }
+            }
+            else {
+                t1 = newTemp();
+                icnode1 = translateExp(node->children[0], t1, NULL);
+            }
+        }
     }
     ArgList* newArg = (ArgList*)malloc(sizeof(ArgList));
     newArg->arg = t1;
     newArg->next = *argList;
     *argList = newArg;
     if(SMTC_PROD_CHECK_3(node, Exp, COMMA, Args)) {
-        ICNode* icnode2 = translateArgs(node->children[2], &newArg);
-        icnode1->next = icnode2;
-        icnode2->prev = icnode1;
-        return icnode1;
+        ICNode* icnode2 = translateArgs(node->children[2], argList);
+        return link(icnode1, icnode2);
     }
     else if(SMTC_PROD_CHECK_1(node, Exp)) {
         return icnode1;
@@ -862,8 +944,11 @@ ICNode* optimize(ICNode* icnode) {
     ICNode* prev = cur;
     while(cur && cur->next) {
     #ifdef SMTC_DEBUG
-        //fprintf(stderr, "------------%d----------\n", count);
-        //printInterCodes(cur, stderr);
+        /*fprintf(stderr, "------------%d----------\n", count);
+        ICNode* next = cur->next->next;
+        cur->next->next = NULL;
+        printInterCodes(cur, stderr);
+        cur->next->next = next;*/
     #endif
         code1 = cur->code;
         code2 = cur->next->code;
@@ -874,6 +959,15 @@ ICNode* optimize(ICNode* icnode) {
                 if(code1->assign.left == code2->assign.right && 
                    code2->assign.right->kind == OP_TEMP) {
                     code1->assign.left = code2->assign.left;
+                    cur->next->next->prev = cur;
+                    cur->next = cur->next->next;
+                }
+                // TODO: [t1 := x] + [t2 := *t1] => [t2 := *x] 
+                else if(code1->assign.left->var_no == code2->assign.right->var_no && 
+                        code1->assign.left->kind == OP_TEMP && code1->assign.right->kind == OP_VAR &&
+                        code2->assign.right->kind == OP_TEMP_MEM) {
+                    code1->assign.left = code2->assign.left;
+                    code1->assign.right->kind = OP_VAR_MEM;
                     cur->next->next->prev = cur;
                     cur->next = cur->next->next;
                 }
@@ -896,6 +990,29 @@ ICNode* optimize(ICNode* icnode) {
                 cur = cur->next;
                 break;
             }
+        }
+        else if(code1->kind == IC_LABEL && code2->kind == IC_LABEL) {
+            code2->op->label_no = code1->op->label_no;
+            cur->next->next->prev = cur;
+            cur->next = cur->next->next;
+        }
+        // [t1 := &x] + [ARG t1] => [ARG &x]
+        else if(code1->kind == IC_ASSIGN && code2->kind == IC_ARG &&
+                code1->assign.left->kind == OP_TEMP && code1->assign.right->kind == OP_VAR_ADDR &&
+                code2->op == code1->assign.left) {
+            code2->op = code1->assign.right;
+            cur->code = code2;
+            cur->next->next->prev = cur;
+            cur->next = cur->next->next;
+        }
+        // TODO: [t1 := &v1] + [t2 := t1 + #4] => [t2 := &v1 + #4]
+        else if(code1->kind == IC_ASSIGN && code2->kind == IC_ADD &&
+        code1->assign.left->kind == OP_TEMP && code1->assign.right->kind == OP_VAR_ADDR &&
+        code2->binop.result->kind == OP_TEMP && code2->binop.op1 == code1->assign.left && code2->binop.op2->kind == OP_CONST) {
+            code2->binop.op1 = code1->assign.right;
+            cur->code = code2;
+            cur->next->next->prev = cur;
+            cur->next = cur->next->next;
         }
         else { cur = cur->next; }
         count++;

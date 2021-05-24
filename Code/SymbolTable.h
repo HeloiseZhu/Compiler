@@ -70,8 +70,9 @@ Symbol* search4Use(char* name, enum NameSrc ns);
 void stackPop();
 void stackPush();
 void printSymbolStack();
+void printSymbolTable();
 
 int getsizeof(DataType* type);
-int getFieldOffset(DataType* specifier, char* field);
+int getFieldOffset(DataType* specifier, char* field, DataType** fieldType);
 
 #endif

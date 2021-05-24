@@ -27,6 +27,7 @@ Operand* newVar();
 Operand* newTemp();
 Operand* newLabel();
 ICNode* newNode(enum ICType type, ...);
+Operand* getConstOp(int val);
 ICNode* link(ICNode* n1, ICNode* n2);
 ICNode* placeAssign(Operand* place, Operand* right);
 Operand* getVarOp(TreeNode* node);

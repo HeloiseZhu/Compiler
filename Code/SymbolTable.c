@@ -70,21 +70,21 @@ Symbol* search4Insert(char* name, enum NameSrc ns) {
     Symbol* p = symbolTable[idx];
     if(ns == NS_FUNC) {    
         while(p) {
-            if(p->nameSrc == NS_FUNC) 
+            if(strcmp(name, p->name) == 0 && p->nameSrc == NS_FUNC) 
                 return p;
             p = p->next;
         }
     }
     else if(ns == NS_STRUCT) {    
         while(p) {
-            if(p->nameSrc == NS_STRUCT || p->nameSrc == NS_GVAR || p->nameSrc == NS_LVAR)
+            if(strcmp(name, p->name) == 0 && (p->nameSrc == NS_STRUCT || p->nameSrc == NS_GVAR || p->nameSrc == NS_LVAR))
                 return p;
             p = p->next;
         }
     }
     else if(ns == NS_GVAR) {    
         while(p) {
-            if(p->nameSrc == NS_STRUCT || p->nameSrc == NS_GVAR)   
+            if(strcmp(name, p->name) == 0 && (p->nameSrc == NS_STRUCT || p->nameSrc == NS_GVAR))   
                 return p;
             p = p->next;
         }
@@ -110,7 +110,7 @@ Symbol* search4Insert(char* name, enum NameSrc ns) {
         }
         p = symbolTable[idx];
         while(p) {
-            if(p->nameSrc == NS_STRUCT)
+            if(strcmp(name, p->name) == 0 && p->nameSrc == NS_STRUCT)
                 return p;
             p = p->next;
         }
@@ -200,7 +200,7 @@ Symbol* search4Use(char* name, enum NameSrc ns) {
     /* Lab3 */
     p = symbolTable[tableIndex];
     while(p) {
-        if(p->nameSrc == ns) 
+        if(p->nameSrc == ns && strcmp(name, p->name) == 0) 
             return p;
         p = p->next;
     }
@@ -294,6 +294,20 @@ void printSymbolStack() {
     fprintf(stderr, "------------------------------\n");
 }
 
+void printSymbolTable() {
+    fprintf(stderr, "-------- Symbol Table -------\n");
+    for(int i=0;i<MAX_ST_SIZE;i++) {
+        if(!symbolTable[i]) continue;
+        fprintf(stderr, "index %d: \n", i);
+        Symbol* p = symbolTable[i];
+        while(p) {
+            fprintf(stderr, "%s | ", p->name);
+            p = p->next;
+        }
+        fprintf(stderr, "\n");
+    }
+    fprintf(stderr, "------------------------------\n");
+}
 
 // Lab3
 int getsizeof(DataType* type) {
@@ -321,14 +335,16 @@ int getsizeof(DataType* type) {
     return size;
 }
 
-int getFieldOffset(DataType* specifier, char* field) {
+int getFieldOffset(DataType* specifier, char* field, DataType** fieldType) {
     // TODO: field is not int type?
     assert(specifier->kind == DT_STRUCT);
     int offset = 0;
     Field* curField = specifier->structure.fieldList;
     while(curField) {
-        if(strcmp(curField->name, field) == 0)
+        if(strcmp(curField->name, field) == 0) {
+            if(fieldType) *fieldType = curField->dataType;
             break;
+        }
         offset += getsizeof(curField->dataType);
         curField = curField->next;
     }

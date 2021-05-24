@@ -38,8 +38,8 @@ int main(int argc, char** argv) {
 	yyparse();
 	if(lexErrorNum == 0 && stdSyntaxErrorNum == 0) {
 	#ifdef SMTC_DEBUG
-		printSyntaxTree(root, 0);
-		fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
+		//printSyntaxTree(root, 0);
+		//fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
 	#endif
 		smtcProgram(root);
 		ICNode* icnode = translateProgram(root);
