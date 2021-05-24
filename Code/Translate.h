@@ -31,6 +31,7 @@ Operand* getConstOp(int val);
 ICNode* link(ICNode* n1, ICNode* n2);
 ICNode* placeAssign(Operand* place, Operand* right);
 Operand* getVarOp(TreeNode* node);
+char* getRelop(char* relop);
 
 ICNode* translateProgram(TreeNode* node);
 ICNode* translateExtDefList(TreeNode* node);
@@ -44,7 +45,7 @@ ICNode* translateDefList(TreeNode* node);
 ICNode* translateDef(TreeNode* node);
 ICNode* translateDecList(TreeNode* node);
 ICNode* translateDec(TreeNode* node);
-ICNode* translateCond(TreeNode* node, Operand* label_true, Operand* label_false);
+ICNode* translateCond(TreeNode* node, Operand* label_true, Operand* label_false, bool mod);
 ICNode* translateLeftExp(TreeNode* node, Operand* place, DataType** param);
 ICNode* translateExp(TreeNode* node, Operand* place, DataType** param);
 ICNode* translateArgs(TreeNode* node, ArgList** argList);
