@@ -6,6 +6,7 @@ typedef struct InterCode_ InterCode;
 typedef struct InterCodeNode_ ICNode;
 typedef struct ArgList_ ArgList;
 typedef struct ConstList_ ConstList;
+typedef struct LabelList_ LabelList;
 
 struct Operand_ {
     enum { 
@@ -54,6 +55,11 @@ struct ArgList_ {
 struct ConstList_ {
     Operand *tmp, *cst; // [tmp := #cst]
     ConstList* next;
+};
+
+struct LabelList_ {
+    Operand* label; // [tmp := #cst]
+    LabelList* next;
 };
 
 #endif // INTERCODE_H
