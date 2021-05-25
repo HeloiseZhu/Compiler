@@ -11,6 +11,7 @@ extern int stdSyntaxErrorNum;
 extern int translateErrorNum;
 extern int prevErrorLine;
 extern int prevCfmErrorLine;
+extern int smtcErrorNum;
 extern TreeNode* root;
 extern int yylex();
 extern int yyparse();
@@ -42,14 +43,16 @@ int main(int argc, char** argv) {
 		//fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
 	#endif
 		smtcProgram(root);
-		ICNode* icnode = translateProgram(root);
-		if(translateErrorNum == 0) {
-		#ifdef SMTC_DEBUG
-			//fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
-			//printInterCodes(icnode, out);
-			//fprintf(out, "[SEM DEGUB] END\n\n");
-		#endif
-			printInterCodes(optimize(icnode), out);
+		if(smtcErrorNum == 0) {
+			ICNode* icnode = translateProgram(root);
+			if(translateErrorNum == 0) {
+			#ifdef SMTC_DEBUG
+				//fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
+				//printInterCodes(icnode, out);
+				//fprintf(out, "[SEM DEGUB] END\n\n");
+			#endif
+				printInterCodes(optimize(icnode), out);
+			}
 		}
 	}
 	else if(stdSyntaxErrorNum != 0) {
