@@ -167,18 +167,17 @@ ICNode* link(ICNode* n1, ICNode* n2) {
 }
 
 Operand* getVarOp(TreeNode* node) {
-    // TODO: var of array or struct type
     if(SMTC_PROD_CHECK_1(node, ID)) {
         Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
-        assert(varSymbol != NULL);
-        if(varSymbol->op->kind == OP_VAR_ADDR) {    // TODO: param
+        assert(varSymbol);
+        /*if(varSymbol->op->kind == OP_VAR_ADDR) {    // TODO: param
             Operand* vmem;
             SET_OPERAND(vmem, OP_VAR_MEM)
             vmem->var_no = varSymbol->op->var_no;
             return vmem;
         }
-        else
-            return varSymbol->op;
+        else*/
+        return varSymbol->op;
         // TODO: var of array or struct type
     }
     return NULL;
@@ -264,7 +263,11 @@ ICNode* handleAssign(char* left, char* right) {
         if(rsym->op->kind == OP_VAR_ADDR) { SET_OPERAND(raddr, OP_VAR) }
         else { SET_OPERAND(raddr, OP_VAR_ADDR) }
         raddr->var_no = rsym->op->var_no;
-        return detailedAssign(lsym->dataType, laddr, raddr, 0);
+        if(lsym->dataType->kind == DT_ARRAY && (lsym->dataType->array.size > rsym->dataType->array.size)) {
+            // TODO: test
+            return detailedAssign(rsym->dataType, laddr, raddr, 0);
+        }
+        else return detailedAssign(lsym->dataType, laddr, raddr, 0);
     }
 }
 
@@ -920,12 +923,20 @@ ICNode* translateArgs(TreeNode* node, ArgList** argList) {
     type = getExpType(node->children[0]);
     t1 = getVarOp(node->children[0]);
     if(!t1 || type->kind != DT_BASIC) {
-        // TODO: arg is const?
         if(type->kind == DT_ARRAY || type->kind == DT_STRUCT) {
-            t1 = newTemp();
-            icnode1 = translateLeftExp(node->children[0], t1, NULL);
+            if(t1) {
+                Operand* t1addr;
+                if(t1->kind == OP_VAR_ADDR) { SET_OPERAND(t1addr, OP_VAR) }
+                else { SET_OPERAND(t1addr, OP_VAR_ADDR) }
+                t1addr->var_no = t1->var_no;
+                t1 = t1addr;
+            } else {
+                t1 = newTemp();
+                icnode1 = translateLeftExp(node->children[0], t1, NULL);
+            }
         }
         else {  // DT_BASIC
+            // TODO: optimize arg is const?
             if(SMTC_PROD_CHECK_1(node->children[0], INT)) {
                 t1 = getConstOp(IVAL(node->children[0]->children[0]));
                 if(!t1) {
@@ -958,6 +969,7 @@ ICNode* translateArgs(TreeNode* node, ArgList** argList) {
 
 void printTranslateError(char* msg) {
     translateErrorNum++;
+    // TODO: only print the first error
     printf("Cannot translate: %s.\n", msg);
 }
 
@@ -1088,7 +1100,9 @@ ICNode* optimize(ICNode* icnode) {
                         code1->assign.left->kind == OP_TEMP && code1->assign.right->kind == OP_VAR &&
                         code2->assign.right->kind == OP_TEMP_MEM) {
                     code1->assign.left = code2->assign.left;
-                    code1->assign.right->kind = OP_VAR_MEM;
+                    Operand* newOp;
+                    SET_OPERAND(newOp, OP_VAR_MEM) newOp->var_no = code1->assign.right->var_no;
+                    code1->assign.right = newOp;
                     cur->next->next->prev = cur;
                     cur->next = cur->next->next;
                 }

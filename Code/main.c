@@ -51,6 +51,9 @@ int main(int argc, char** argv) {
 				//printInterCodes(icnode, out);
 				//fprintf(out, "[SEM DEGUB] END\n\n");
 			#endif
+				/*fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
+				printInterCodes(icnode, out);
+				fprintf(out, "[SEM DEGUB] END\n\n");*/
 				printInterCodes(optimize(icnode), out);
 			}
 		}
