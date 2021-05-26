@@ -247,7 +247,7 @@ void smtcVarDec4Param(TreeNode* node, Symbol* funcSymbol, DataType* specifier) {
         SMTC_SET_SYMBOL(paramSymbol, NS_LVAR)
         paramSymbol->name = SVAL(node->children[0]);
         paramSymbol->dataType = specifier;
-        paramSymbol->op = newVar();
+        paramSymbol->op = newVar(paramSymbol);
         if(paramSymbol->dataType->kind == DT_ARRAY || 
            paramSymbol->dataType->kind == DT_STRUCT) {
             // TODO: op is addr
@@ -301,7 +301,7 @@ DataType* smtcVarDec4Var(TreeNode* node, DataType* specifier, enum NameSrc ns) {
         SMTC_SET_SYMBOL(varSymbol, ns)
         varSymbol->name = SVAL(node->children[0]);
         varSymbol->dataType = specifier;
-        varSymbol->op = newVar();
+        varSymbol->op = newVar(varSymbol);
 
         Symbol* s = search4Insert(SVAL(node->children[0]), ns);
         if(ns == NS_GVAR) {
@@ -866,6 +866,7 @@ DataType* getExpType(TreeNode* node) {
     if(SMTC_PROD_CHECK_3(node, Exp, ASSIGNOP, Exp) ||
        SMTC_PROD_CHECK_3(node, Exp, PLUS, Exp) || SMTC_PROD_CHECK_3(node, Exp, MINUS, Exp) ||
        SMTC_PROD_CHECK_3(node, Exp, STAR, Exp) || SMTC_PROD_CHECK_3(node, Exp, DIV, Exp)) {
+        // TODO: array type?
         return getExpType(node->children[0]);
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, AND, Exp) || SMTC_PROD_CHECK_3(node, Exp, OR, Exp) ||

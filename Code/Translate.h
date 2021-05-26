@@ -4,6 +4,13 @@
 #include "InterCode.h"
 #include "SemanticAnalysis.h"
 
+typedef struct VarList_ VarList;
+struct VarList_ {
+    Symbol* symbol;
+    Operand* op;
+    VarList* next;
+};
+
 #define SET_OPERAND(op, k) \
     op = (Operand*)malloc(sizeof(Operand)); \
     op->kind = k;
@@ -23,7 +30,7 @@
 
 
 void initIC();
-Operand* newVar();
+Operand* newVar(Symbol* varSymbol);
 Operand* newTemp();
 Operand* newLabel();
 ICNode* newNode(enum ICType type, ...);
@@ -31,9 +38,14 @@ Operand* getConstOp(int val);
 void insertConstOp(Operand* tmp, Operand* cst);
 void clearConstList();
 void changeLabelNo(int target, int val);
-ICNode* link(ICNode* n1, ICNode* n2);
 Operand* getVarOp(TreeNode* node);
+Operand* getVarAddr(char* name);
+Symbol* getVarSymbol(int target);
 char* getRelop(char* relop);
+ICNode* link(ICNode* n1, ICNode* n2);
+ICNode* detailedAssign(DataType* type, Operand* laddr, Operand* raddr, int offset);
+ICNode* handleAssign(char* left, char* right);
+ICNode* continuousAssign(TreeNode* node, Operand* place);
 
 ICNode* translateProgram(TreeNode* node);
 ICNode* translateExtDefList(TreeNode* node);
