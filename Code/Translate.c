@@ -1107,7 +1107,7 @@ ICNode* optimize(ICNode* icnode) {
             cur->next = cur->next->next;
         }
         else { cur = cur->next; }
-        count++;
+        count++; 
     }
     return icnode;
 }
