@@ -93,12 +93,12 @@ ExtDef :
 		$$ = createNode(NT_ExtDef, @$.first_line);
 		addChildNode($$, 3, $1, $2, $3);
 	}
-	| Specifier FunDec SEMI {
+	/*| Specifier FunDec SEMI {
 		printSyntaxError(@3.first_line, "Incomplete definition of function"); 	// TODO: add func name & test
 		$$ = createNode(NT_ExtDef, @$.first_line);
 		addChildNode($$, 3, $1, $2, $3);
 	}
-	/*| Specifier ExtDecList error {
+	| Specifier ExtDecList error {
 		// [s/r]: VarDec error
 		printSyntaxError(@3.first_line, "expecting \";\" or correct variable declaration"); 
 		$$ = createNode(NT_ExtDef, @$.first_line);

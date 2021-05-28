@@ -34,18 +34,13 @@ Operand* newVar(Symbol* varSymbol);
 Operand* newTemp();
 Operand* newLabel();
 ICNode* newNode(enum ICType type, ...);
-Operand* getConstOp(int val);
-void insertConstOp(Operand* tmp, Operand* cst);
-void clearConstList();
 void changeLabelNo(int target, int val);
 Operand* getVarOp(TreeNode* node);
 Operand* getVarAddr(char* name);
-Symbol* getVarSymbol(int target);
 char* getRelop(char* relop);
 ICNode* link(ICNode* n1, ICNode* n2);
 ICNode* detailedAssign(DataType* type, Operand* laddr, Operand* raddr, int offset);
 ICNode* handleAssign(char* left, char* right);
-ICNode* continuousAssign(TreeNode* node, Operand* place);
 
 ICNode* translateProgram(TreeNode* node);
 ICNode* translateExtDefList(TreeNode* node);

@@ -39,21 +39,18 @@ int main(int argc, char** argv) {
 	yyparse();
 	if(lexErrorNum == 0 && stdSyntaxErrorNum == 0) {
 	#ifdef SMTC_DEBUG
-		//printSyntaxTree(root, 0);
-		//fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
+		printSyntaxTree(root, 0);
+		fprintf(stderr, "[SEM DEGUB] Semantic Analysis begins\n");
 	#endif
 		smtcProgram(root);
 		if(smtcErrorNum == 0) {
 			ICNode* icnode = translateProgram(root);
 			if(translateErrorNum == 0) {
 			#ifdef SMTC_DEBUG
-				//fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
-				//printInterCodes(icnode, out);
-				//fprintf(out, "[SEM DEGUB] END\n\n");
-			#endif
-				/*fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
+				fprintf(out, "[SEM DEGUB] IR before optimizing:\n");
 				printInterCodes(icnode, out);
-				fprintf(out, "[SEM DEGUB] END\n\n");*/
+				fprintf(out, "[SEM DEGUB] END\n\n");
+			#endif
 				printInterCodes(optimize(icnode), out);
 			}
 		}

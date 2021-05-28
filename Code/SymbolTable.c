@@ -336,7 +336,6 @@ int getsizeof(DataType* type) {
 }
 
 int getFieldOffset(DataType* specifier, char* field, DataType** fieldType) {
-    // TODO: field is not int type?
     assert(specifier->kind == DT_STRUCT);
     int offset = 0;
     Field* curField = specifier->structure.fieldList;

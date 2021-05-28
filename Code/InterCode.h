@@ -52,11 +52,6 @@ struct ArgList_ {
     ArgList* next;
 };
 
-struct ConstList_ {
-    Operand *tmp, *cst; // [tmp := #cst]
-    ConstList* next;
-};
-
 struct LabelList_ {
     Operand* label; // [tmp := #cst]
     LabelList* next;

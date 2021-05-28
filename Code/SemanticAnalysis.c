@@ -250,7 +250,7 @@ void smtcVarDec4Param(TreeNode* node, Symbol* funcSymbol, DataType* specifier) {
         paramSymbol->op = newVar(paramSymbol);
         if(paramSymbol->dataType->kind == DT_ARRAY || 
            paramSymbol->dataType->kind == DT_STRUCT) {
-            // TODO: op is addr
+            // param is var addr
             paramSymbol->op->kind = OP_VAR_ADDR;
         }
 
@@ -691,7 +691,6 @@ DataType* smtcExp(TreeNode* node) {
     else if(SMTC_PROD_CHECK_4(node, Exp, LB, Exp, RB)) {
         DataType* typeA = smtcExp(node->children[0]);
         DataType* typeB = smtcExp(node->children[2]);
-        // TODO: type check
         if(!equalDataType(typeB, intSpecifier)) {
             printSmtcError(node->children[2]->lineno, 12, "Expecting \"int\" type when accessing values of an array");
         }
@@ -706,7 +705,6 @@ DataType* smtcExp(TreeNode* node) {
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, DOT, ID)) {
         DataType* type = smtcExp(node->children[0]);
-        // TODO: type check
         if(SMTC_TYPE_CHECK(type, DT_STRUCT)) {
         #ifdef SMTC_DEBUG
             fprintf(stderr, "[SEM DEGUB] Search for Use: name: %s, ns: Field\n", SVAL(node->children[2]));
@@ -866,8 +864,14 @@ DataType* getExpType(TreeNode* node) {
     if(SMTC_PROD_CHECK_3(node, Exp, ASSIGNOP, Exp) ||
        SMTC_PROD_CHECK_3(node, Exp, PLUS, Exp) || SMTC_PROD_CHECK_3(node, Exp, MINUS, Exp) ||
        SMTC_PROD_CHECK_3(node, Exp, STAR, Exp) || SMTC_PROD_CHECK_3(node, Exp, DIV, Exp)) {
-        // TODO: array type?
-        return getExpType(node->children[0]);
+        DataType* typeA = getExpType(node->children[0]);
+        if(typeA->kind == DT_ARRAY) {   // Exp ASSIGNOP Exp
+            DataType* typeB = getExpType(node->children[2]);
+            if(typeA->array.size <= typeB->array.size)
+                return typeA;
+            else return typeB;  
+        }
+        else return typeA; 
     }
     else if(SMTC_PROD_CHECK_3(node, Exp, AND, Exp) || SMTC_PROD_CHECK_3(node, Exp, OR, Exp) ||
             SMTC_PROD_CHECK_3(node, Exp, RELOP, Exp) || SMTC_PROD_CHECK_2(node, NOT, Exp) ||
@@ -896,13 +900,12 @@ DataType* getExpType(TreeNode* node) {
                 return curField->dataType;
             curField = curField->next;
         }
-        assert(0);
     }
     else if(SMTC_PROD_CHECK_1(node, ID)) {
         Symbol* varSymbol = search4Use(SVAL(node->children[0]), NS_LVAR);
         assert(varSymbol);
         return varSymbol->dataType;
     }
-    else assert(0);
-    return NULL;;
+    else while(0);
+    return NULL;
 }
