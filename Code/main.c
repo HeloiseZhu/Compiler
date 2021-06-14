@@ -22,16 +22,9 @@ extern void yyerror(char* msg);
 int main(int argc, char** argv) {
 	if (argc != 3) 
 		return 1;
-	FILE* in;
-	FILE* out;
-	in = fopen(argv[1], "r");
-	out = fopen(argv[2], "w");
+	FILE* in = fopen(argv[1], "r");
 	if (!in) {
 		perror(argv[1]);
-		return 1;
-	}
-	if (!out) {
-		perror(argv[2]);
 		return 1;
 	}
 	//yydebug = 1;
@@ -51,7 +44,13 @@ int main(int argc, char** argv) {
 				printInterCodes(icnode, out);
 				fprintf(out, "[SEM DEGUB] END\n\n");
 			#endif
+				FILE* out = fopen(argv[2], "w");
+				if (!out) {
+					perror(argv[2]);
+					return 1;
+				}
 				printInterCodes(optimize(icnode), out);
+				fclose(out);
 			}
 		}
 	}
@@ -63,7 +62,6 @@ int main(int argc, char** argv) {
 	}
 
 	fclose(in);
-	fclose(out);
 
 	return 0;
 }
