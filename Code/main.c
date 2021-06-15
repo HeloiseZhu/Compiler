@@ -1,5 +1,6 @@
 #include "SemanticAnalysis.h"
 #include "Translate.h"
+#include "Assembly.h"
 
 extern FILE* yyin;
 extern int yylineno;
@@ -49,7 +50,11 @@ int main(int argc, char** argv) {
 					perror(argv[2]);
 					return 1;
 				}
-				printInterCodes(optimize(icnode), out);
+				// Lab3
+				// printInterCodes(optimize(icnode), out);
+				// Lab4
+				AsmCode* asmCodes = ir2asm(icnode);
+				printAsmCodes(asmCodes, out);
 				fclose(out);
 			}
 		}

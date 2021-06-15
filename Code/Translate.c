@@ -962,32 +962,15 @@ char* translateOperand(Operand* op) {
         return NULL;
     char* str = (char*)malloc(sizeof(char)*32);
     switch (op->kind) {
-    case OP_VAR:
-        sprintf(str, "v%d", op->var_no);
-        break;
-    case OP_TEMP:
-        sprintf(str, "t%d", op->var_no);
-        break;
-    case OP_CONST:
-        sprintf(str, "#%d", op->val);
-        break;
-    case OP_VAR_ADDR:
-        sprintf(str, "&v%d", op->var_no);
-        break;
-    case OP_TEMP_ADDR:
-        sprintf(str, "&t%d", op->var_no);
-        break;
-    case OP_VAR_MEM:
-        sprintf(str, "*v%d", op->var_no);
-        break;
-    case OP_TEMP_MEM:
-        sprintf(str, "*t%d", op->var_no);
-        break;
-    case OP_LABEL:
-        sprintf(str, "label%d", op->label_no);
-        break;
-    default:
-        break;
+    case OP_VAR: sprintf(str, "v%d", op->var_no); break;
+    case OP_TEMP: sprintf(str, "t%d", op->var_no); break;
+    case OP_CONST: sprintf(str, "#%d", op->val); break;
+    case OP_VAR_ADDR: sprintf(str, "&v%d", op->var_no); break;
+    case OP_TEMP_ADDR: sprintf(str, "&t%d", op->var_no); break;
+    case OP_VAR_MEM: sprintf(str, "*v%d", op->var_no); break;
+    case OP_TEMP_MEM: sprintf(str, "*t%d", op->var_no); break;
+    case OP_LABEL: sprintf(str, "label%d", op->label_no); break;
+    default: break;
     }
     return str;
 }
